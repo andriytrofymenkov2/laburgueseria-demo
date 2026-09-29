@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LaBurguesería Café | Hamburguesas en Río Gallegos</title>
+<meta name="description" content="Hamburguesas y mucho más. Av. Kirchner 1167, Río Gallegos. Abierto de 09:00 a 00:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e4303b;--red-d:#b81f2a;--ink:#070709;--panel:#121215;--line:#2a2a30;--white:#fff;--mute:#b9b9c2}
+*{box-sizing:border-box;margin:0;padding:0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{font-family:'Poppins',sans-serif;background:var(--ink);background-image:radial-gradient(ellipse 70% 40% at 50% -5%,rgba(255,255,255,.13),transparent 70%);background-repeat:no-repeat;color:var(--white);overflow-x:hidden;font-size:17px;line-height:1.45}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.mask{overflow:hidden;display:block;padding-bottom:.05em}
+.mask>span{display:block}
+/* tag rojo con remaches, como los banners del Instagram */
+.eyebrow,.sticker,.lbl{background-color:var(--red);color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:4px;
+  background-image:radial-gradient(circle,#fff 2px,transparent 2.6px),radial-gradient(circle,#fff 2px,transparent 2.6px),radial-gradient(circle,#fff 2px,transparent 2.6px),radial-gradient(circle,#fff 2px,transparent 2.6px);
+  background-size:9px 9px;background-repeat:no-repeat;background-position:2px 2px,calc(100% - 2px) 2px,2px calc(100% - 2px),calc(100% - 2px) calc(100% - 2px)}
+.eyebrow{display:inline-block;padding:9px 20px;font-size:clamp(12px,1.1vw,16px);transform:rotate(-3deg);margin-bottom:22px;box-shadow:0 4px 0 rgba(0,0,0,.4)}
+.big{font-family:'Anton';font-weight:400;font-size:clamp(56px,9vw,150px);line-height:.98;text-transform:uppercase;color:#fff;letter-spacing:.5px}
+.big .mask:nth-child(2){color:var(--red)}
+.big em{font-style:italic;color:var(--red)}
+/* ---------- cinta de estado ---------- */
+#status{position:fixed;top:0;left:0;right:0;height:34px;z-index:120;background:var(--red);color:#fff;overflow:hidden;display:flex;align-items:center;font-weight:700;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;white-space:nowrap}
+#status.closed{background:#2a2a30}
+#status .trk{display:inline-flex;will-change:transform}
+#status .trk span{padding:0 28px;display:inline-flex;align-items:center;gap:10px}
+#status .dot{width:9px;height:9px;border-radius:50%;background:#7dff9a;box-shadow:0 0 0 0 rgba(125,255,154,.8);animation:ping 1.6s infinite}
+#status.closed .dot{background:#ff6b6b;animation:none}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(125,255,154,0)}100%{box-shadow:0 0 0 0 rgba(125,255,154,0)}}
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+#lgo{width:min(560px,74vw);height:auto;filter:drop-shadow(0 10px 30px rgba(228,48,59,.35))}
+.lbar{width:min(300px,56vw);height:4px;background:#232327;border-radius:4px;overflow:hidden}
+.lbar i{display:block;height:100%;width:0;background:var(--red)}
+#loader p{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--mute);font-weight:600}
+#wipe{position:fixed;inset:0;background:var(--red);z-index:210;transform:translateY(101%)}
+/* ---------- cursor con ingredientes ---------- */
+#cur{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:30px;height:64px;margin:-3px 0 0 -15px;display:none;opacity:0}
+#cur svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 4px 5px rgba(0,0,0,.55))}
+html.fork,html.fork *{cursor:none!important}
+@media(hover:hover) and (pointer:fine){#cur{display:block}}
+/* ---------- header ---------- */
+header{position:fixed;top:34px;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:16px 3vw 30px;background:linear-gradient(180deg,rgba(7,7,9,.85),rgba(7,7,9,0));transition:transform .4s}
+header.hide{transform:translateY(-160%)}
+.logo{display:inline-block;line-height:0}
+.logo img{height:38px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,.7))}
+nav{display:flex;gap:10px;align-items:center}
+.pill{background:var(--red);color:#fff;padding:12px 26px;border-radius:5px;text-transform:uppercase;letter-spacing:.8px;border:2px solid var(--red);cursor:pointer;font-weight:700;font-size:14px;display:inline-block;transition:transform .2s,background .2s}
+.pill:hover{transform:translateY(-3px);background:var(--red-d);border-color:var(--red-d)}
+.pill.alt{background:rgba(7,7,9,.5);color:#fff;border-color:rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+.pill.alt:hover{background:#fff;color:var(--ink);border-color:#fff}
+.pill.wht{background:#fff;color:var(--red);border-color:#fff}
+.pill.wht:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* ---------- hero ---------- */
+.hero{height:100vh;min-height:680px;position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:0 3vw 4vh;overflow:hidden;background:radial-gradient(ellipse 60% 45% at 50% 100%,rgba(228,48,59,.28),transparent 70%)}
+.hero{--lw:min(62vw,860px);--lh:calc(var(--lw) / 4.486)}
+.hlogo-wrap{position:absolute;top:11vh;left:0;right:0;z-index:4;text-align:center;pointer-events:none}
+#hlogo{width:var(--lw);height:auto;display:inline-block;filter:drop-shadow(0 10px 24px rgba(0,0,0,.65))}
+.hero .heroburger{position:absolute;left:50%;top:calc(11vh + var(--lh) + 7vh);width:min(40vw,calc((100vh - 11vh - var(--lh) - 7vh - 7vh) * 1.2),600px);transform:translateX(-50%);z-index:3;perspective:1200px}
+.hb-disc{position:absolute;left:50%;top:52%;width:98%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 42%,#ff5661 0,#e4303b 45%,#a5141f 100%);box-shadow:0 0 0 10px rgba(255,255,255,.08),0 0 0 22px rgba(255,255,255,.04),0 40px 90px rgba(228,48,59,.55);z-index:0}
+.hb-disc::after{content:"";position:absolute;inset:-14%;border-radius:50%;border:2px dashed rgba(255,255,255,.35);animation:spin 40s linear infinite}
+.hb-glow{position:absolute;inset:-25% -22%;background:radial-gradient(closest-side,rgba(228,48,59,.55),transparent 72%);filter:blur(30px);animation:pulse 3.2s ease-in-out infinite;z-index:0}
+@keyframes pulse{50%{transform:scale(1.1);opacity:.7}}
+.hb-card{position:relative;z-index:2;transform-style:preserve-3d;will-change:transform}
+.hb-card img{display:block;width:100%;height:auto;filter:drop-shadow(0 34px 30px rgba(0,0,0,.55)) drop-shadow(0 0 2px rgba(0,0,0,.4));animation:floaty 5s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-16px) rotate(-1.2deg)}}
+.hb-badge{position:absolute;left:-11%;top:1%;width:21%;z-index:5;animation:spin 14s linear infinite}
+.hb-badge svg{width:100%;height:auto;overflow:visible}
+.hb-badge text{font-family:'Anton';font-size:22px;fill:#fff;letter-spacing:2px}
+.hb-badge .hb-c{fill:var(--red);stroke:#fff;stroke-width:4}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hb-f{position:absolute;z-index:6;pointer-events:none}
+.hb-f>div{animation:bob 3s ease-in-out infinite}
+.hb-f svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 10px 14px rgba(0,0,0,.55))}
+@keyframes bob{50%{transform:translateY(-14px) rotate(6deg)}}
+.hf1{right:-13%;top:6%;width:22%}.hf2{right:-13%;bottom:6%;width:22%}.hf3{left:-13%;bottom:6%;width:22%}
+.hf1 img{transform:rotate(16deg)}.hf3 img{transform:rotate(-12deg)}.hf2 img{transform:rotate(0deg)}
+.hb-f img{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 16px rgba(0,0,0,.55))}
+.hf2>div{animation-delay:.8s}.hf3>div{animation-delay:1.6s}
+.sticker{position:absolute;padding:10px 20px;font-size:clamp(13px,1.5vw,22px);line-height:1.1;z-index:4;box-shadow:0 5px 0 rgba(0,0,0,.4)}
+.s1{top:calc(11vh + var(--lh) + 12vh);left:5vw;transform:rotate(-8deg)}
+.s2{top:calc(11vh + var(--lh) + 22vh);right:5vw;transform:rotate(6deg)}
+.blurb{position:absolute;bottom:15vh;width:min(20vw,300px);font-size:clamp(13px,1.05vw,16px);z-index:5;color:var(--mute)}
+.blurb.l{left:3vw}.blurb.r{right:3vw;text-align:right}
+.scrollhint{position:absolute;bottom:2.2vh;left:50%;transform:translateX(-50%);z-index:6;font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.6}
+/* ---------- cinta corrida ---------- */
+.band{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0 12px;position:relative;z-index:6;border-top:3px solid #fff;border-bottom:3px solid #fff}
+.band div{display:inline-flex;will-change:transform;font-family:'Anton';font-size:clamp(26px,3.4vw,46px);letter-spacing:1px;text-transform:uppercase}
+.band span{padding:0 22px}.band b{font-weight:400;color:var(--ink)}
+/* ---------- estrellas (scroll horizontal) ---------- */
+.stars{position:relative;height:100vh;background:radial-gradient(ellipse 60% 50% at 30% 55%,rgba(228,48,59,.16),transparent 70%),#08080a;overflow:hidden}
+.stars-top{position:absolute;top:calc(34px + 11vh);left:5vw;right:5vw;z-index:6;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.stars-top .eyebrow{margin:0}
+.count{font-family:'Anton';font-size:34px;letter-spacing:2px;color:var(--mute)}
+.count b{color:#fff;font-weight:400}
+.track{display:flex;height:100%;width:400vw}
+.slide{width:100vw;height:100%;position:relative;overflow:hidden;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3vw;padding:14vh 6vw 6vh}
+.giant{position:absolute;left:2vw;top:52%;transform:translateY(-50%);font-family:'Anton';font-size:min(15.5vw,36vh);line-height:1;text-transform:uppercase;white-space:nowrap;color:transparent;-webkit-text-stroke:2px rgba(228,48,59,.5);z-index:0;letter-spacing:2px;pointer-events:none;will-change:transform}
+.pic{position:relative;z-index:2;justify-self:center;width:min(100%,58vh * 1.25);}
+.pic img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 60%,transparent 100%);filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));will-change:transform}
+.pic.disc::before{content:"";position:absolute;left:50%;top:52%;width:86%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 40%,#ff5661,#e4303b 50%,#a5141f);box-shadow:0 30px 80px rgba(228,48,59,.5)}
+.pic.disc img{-webkit-mask-image:none;mask-image:none;position:relative}
+.pic.big{width:min(66%,50vh * 1.1)}
+.pic.big.disc::before{width:112%;left:63%;top:41%}
+.pic.big img{filter:drop-shadow(0 34px 38px rgba(0,0,0,.6))}
+.pic.two{aspect-ratio:1.22/1}
+.pic.two img{position:absolute;height:auto;filter:drop-shadow(0 26px 30px rgba(0,0,0,.6))}
+.pic.two .b1{width:72%;left:-4%;bottom:0;z-index:3}
+.pic.two .b2{width:62%;right:-1%;top:17%;z-index:2;filter:brightness(.88) drop-shadow(0 22px 26px rgba(0,0,0,.55))}
+.pic.two.ch .b1{width:74%;left:-6%;bottom:2%;z-index:3}
+.pic.two.ch .b2{width:44%;right:0;top:0;z-index:2;filter:drop-shadow(0 22px 26px rgba(0,0,0,.55))}
+.info{position:relative;z-index:3}
+.info .n{font-family:'Anton';font-size:22px;letter-spacing:3px;color:var(--red)}
+.info h3{font-family:'Anton';font-weight:400;font-size:clamp(40px,5.6vw,92px);line-height:.95;text-transform:uppercase;margin:6px 0 14px}
+.info p{color:var(--mute);max-width:420px;font-size:clamp(14px,1.15vw,17px)}
+.info .row2{display:flex;gap:16px;align-items:center;margin-top:22px;flex-wrap:wrap}
+.ptag{font-family:'Anton';font-size:clamp(24px,2.4vw,36px);background:var(--red);padding:4px 16px;border-radius:4px;transform:skewX(-8deg);display:inline-block}
+.stars-bar{position:absolute;left:6vw;right:6vw;bottom:5vh;height:3px;background:#232327;z-index:6}
+.stars-bar i{display:block;height:100%;width:0;background:var(--red)}
+/* ---------- anatomía ---------- */
+.explode{position:relative;height:100vh;background:radial-gradient(ellipse 45% 55% at 50% 60%,rgba(228,48,59,.3),transparent 70%),#0a0a0c;overflow:hidden;display:grid;place-items:center}
+.explode h2{position:absolute;top:calc(34px + 4.5vh);left:0;right:0;text-align:center;font-family:'Anton';font-weight:400;font-size:clamp(34px,4.6vw,74px);color:#fff;text-transform:uppercase;line-height:.98;z-index:2}
+.explode h2 em{font-style:italic;color:var(--red)}
+.explode .burger{--W:min(24vw,25vh,240px);--hw:calc(var(--W) / 2);position:absolute;left:50%;top:58vh;width:var(--W)}
+.whole{position:absolute;left:50%;top:50%;width:112%;transform:translate(-50%,-50%);z-index:30;pointer-events:none;filter:drop-shadow(0 22px 28px rgba(0,0,0,.55))}
+.layer img{display:block;width:100%;object-fit:fill;filter:drop-shadow(0 10px 14px rgba(0,0,0,.5))}
+.layer{width:100%;display:block;margin-top:-16px;position:relative;will-change:transform}
+.layer:first-child{margin-top:0}
+.layer svg{display:block;width:100%;height:auto;overflow:visible}
+.burger{display:flex;flex-direction:column;align-items:center;width:100%}
+.lbl{position:absolute;top:50%;font-size:clamp(10px,.95vw,14px);padding:7px 16px;opacity:0;white-space:nowrap;z-index:3;transform:translateY(-50%)}
+.lbl.r{left:calc(50% + var(--hw) + 26px)}.lbl.l{right:calc(50% + var(--hw) + 26px)}
+.lbl::before{content:"";position:absolute;top:50%;width:24px;height:2px;background:#fff}
+.lbl.r::before{right:100%}.lbl.l::before{left:100%}
+/* ---------- menú ---------- */
+.menu{padding:9vh 5vw 6vh;position:relative;background:#0a0a0c}
+.menu h2.big{font-size:clamp(60px,8.5vw,140px)}
+.sub{max-width:540px;margin:10px 0 28px;font-size:clamp(15px,1.25vw,19px);color:var(--mute)}
+.menu-wrap{display:grid;grid-template-columns:230px 1fr;gap:5vw;align-items:start}
+.mnav{position:sticky;top:150px;display:flex;flex-direction:column;align-items:stretch;gap:6px}
+.mnav button{display:flex;align-items:center;gap:14px;background:none;border:0;border-left:3px solid var(--line);color:var(--mute);padding:14px 16px;text-align:left;font-weight:600;font-size:14px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.mnav button svg{width:26px;height:26px;flex:none}
+.mnav button:hover{color:#fff;border-color:var(--red)}
+.mnav button.on{color:#fff;border-color:var(--red);background:linear-gradient(90deg,rgba(228,48,59,.22),transparent)}
+.mblock{padding-bottom:80px}
+.mblock:last-child{padding-bottom:20px}
+.mblock h3{display:flex;align-items:center;gap:16px;font-family:'Anton';font-weight:400;font-size:clamp(34px,4vw,60px);text-transform:uppercase;line-height:1;margin-bottom:10px}
+.mblock h3 svg{width:.9em;height:.9em;color:var(--red)}
+.mblock .mdesc{color:var(--mute);font-size:14px;margin-bottom:18px}
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}@media(max-width:1400px){.mgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:1000px){.mgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mcard{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s,box-shadow .3s}
+.mcard:hover{transform:translateY(-6px);border-color:var(--red);box-shadow:0 22px 50px rgba(228,48,59,.22)}
+.mimg{position:relative;aspect-ratio:1.35/1;background:radial-gradient(circle at 50% 38%,#43434c,#0c0c0f 78%);display:grid;place-items:center;overflow:hidden}
+.mimg::after{content:"";position:absolute;left:50%;top:54%;width:64%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(228,48,59,.55) 0,rgba(228,48,59,0) 68%);transform:translate(-50%,-50%);z-index:0}
+.mimg img{position:relative;z-index:1;width:88%;height:88%;object-fit:contain;filter:drop-shadow(0 16px 18px rgba(0,0,0,.6));transition:transform .5s}
+.mimg.cv img{width:100%;height:100%;object-fit:cover;filter:none}
+.mimg.cv::after{display:none}
+.mimg .emo{position:relative;z-index:1;font-size:clamp(90px,9vw,150px);filter:drop-shadow(0 12px 14px rgba(0,0,0,.5));transition:transform .5s}
+.mcard:hover .mimg img,.mcard:hover .mimg .emo{transform:scale(1.08) rotate(-2deg)}
+.mtag{position:absolute;top:14px;left:14px;z-index:2;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:4px;text-transform:uppercase;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+.mbody{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.mbody h4{font-family:'Anton';font-weight:400;font-size:clamp(20px,1.5vw,24px);letter-spacing:.5px;text-transform:uppercase;line-height:1.05}
+.mbody p{color:var(--mute);font-size:14px;flex:1}
+.mfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.mfoot .pr{font-family:'Anton';font-size:clamp(22px,2vw,30px);background:var(--red);padding:4px 14px;border-radius:4px;transform:skewX(-8deg);display:inline-block}
+.mcard .add{background:#fff;color:var(--ink);border:0;border-radius:5px;padding:12px 20px;font-family:'Poppins';font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.mcard .add:hover{background:var(--red);color:#fff}
+.mcard .add:active{transform:scale(.94)}
+.note{font-size:13px;margin-top:10px;opacity:.55}
+/* ---------- reseñas ---------- */
+.reviews{position:relative;padding:9vh 5vw 9vh;background:#070709;overflow:hidden}
+.reviews .bgword{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-family:'Anton';font-size:min(30vw,420px);line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.07);white-space:nowrap;pointer-events:none;text-transform:uppercase}
+.rev-head{position:relative;z-index:2;text-align:center;margin-bottom:34px}
+.rev-head .stat{display:inline-block;margin-top:14px;color:var(--mute);font-size:15px}
+.rev-head .stat b{color:#fff}
+.cards{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.rcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;will-change:transform}
+.rcard:nth-child(2n){background:var(--red);border-color:var(--red)}
+.stars5{letter-spacing:3px;color:#ffd23f;font-size:18px}
+.rcard:nth-child(2n) .stars5{color:#fff}
+.rcard p{margin:14px 0 20px;font-size:15px}
+.rcard .who{font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.rcard .ej{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:1.5px;font-weight:700;border:1px solid currentColor;padding:2px 6px;border-radius:3px;opacity:.6}
+/* ---------- zona kids ---------- */
+.kids{position:relative;background:var(--red);padding:10vh 5vw 9vh;overflow:hidden}
+.kids::before{content:"";position:absolute;top:-1px;left:0;right:0;height:22px;background:radial-gradient(circle at 11px 0,#070709 10px,transparent 10.6px) 0 0/22px 22px repeat-x}
+.kids::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:22px;background:radial-gradient(circle at 11px 22px,#0a0a0c 10px,transparent 10.6px) 0 0/22px 22px repeat-x}
+.kids-in{display:grid;grid-template-columns:1.1fr .9fr;gap:5vw;align-items:center;position:relative;z-index:2}
+.kids .eyebrow{background-color:var(--ink);background-image:none}
+.kids .big{font-size:clamp(64px,10vw,170px);color:#fff}
+.kids .big .mask:nth-child(2){color:var(--ink)}
+.kids p.lead{max-width:480px;margin:20px 0 26px;font-size:clamp(15px,1.3vw,19px);font-weight:500}
+.chips{display:flex;gap:12px;flex-wrap:wrap}
+.chip{background:#fff;color:var(--red);font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;padding:11px 20px;border-radius:40px}
+.kpic{position:relative;justify-self:center;width:min(100%,460px)}
+.kpic .frame{border-radius:22px;overflow:hidden;border:4px solid #fff;box-shadow:0 22px 0 rgba(7,7,9,.85);transform:rotate(3deg);background:radial-gradient(circle at 50% 38%,#4a4a54,#0c0c0f 82%);padding:34px 30px 38px}
+.kpic .frame img{display:block;width:100%;height:auto;filter:drop-shadow(0 20px 22px rgba(0,0,0,.6))}
+.kfl{position:absolute;font-size:min(9vw,72px);background:#fff;border-radius:18px;padding:6px 14px;box-shadow:0 10px 26px rgba(0,0,0,.35);animation:bob 3.4s ease-in-out infinite}
+.kfl.a{left:-10%;top:6%}.kfl.b{right:-8%;top:34%;animation-delay:.9s}.kfl.c{left:4%;bottom:-6%;animation-delay:1.7s}
+/* ---------- cómo pedir ---------- */
+.visit{padding:9vh 5vw 8vh;background:#0a0a0c;position:relative}
+.visit .head{text-align:center;margin-bottom:30px}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:22px}
+.way{border-radius:18px;padding:30px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;min-height:300px}
+.way h3{font-family:'Anton';font-weight:400;font-size:clamp(30px,3vw,46px);text-transform:uppercase;line-height:1}
+.way p{color:var(--mute);font-size:15px;flex:1}
+.way.red{background:var(--red);border-color:var(--red)}
+.way.red p{color:#fff}
+.way .num{font-family:'Anton';font-size:16px;letter-spacing:3px;opacity:.7}
+.way .phone{position:absolute;right:-3%;bottom:-34%;width:50%;background:#0b141a;border:3px solid #fff;border-radius:24px;padding:12px 10px 34px;transform:rotate(7deg);box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:1}
+.phone .ph-h{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:#e9edef;padding:2px 4px 8px;border-bottom:1px solid #1f2c34;margin-bottom:8px}
+.phone .ph-h i{width:22px;height:22px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-style:normal;font-size:12px}
+.phone .bub{background:#005c4b;color:#e9edef;font-size:11px;line-height:1.35;padding:8px 10px;border-radius:10px 10px 0 10px;margin-left:10%}
+.phone .bub.in{background:#202c33;border-radius:10px 10px 10px 0;margin:6px 10% 0 0}
+.way .bag{position:absolute;right:-6%;bottom:-8%;width:46%;opacity:.95;transform:rotate(6deg);border-radius:14px;-webkit-mask-image:linear-gradient(135deg,transparent 10%,#000 60%);mask-image:linear-gradient(135deg,transparent 10%,#000 60%)}
+.way .pill{align-self:flex-start;position:relative;z-index:2}
+.info-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:22px}
+.hours{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:30px}
+.hours h4{font-family:'Anton';font-weight:400;font-size:30px;text-transform:uppercase;margin-bottom:12px}
+.hours ul{list-style:none}
+.hours li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.hours li b{color:var(--red)}
+.hours .addr{margin-top:18px;color:var(--mute);font-size:15px}
+.mapbox{border-radius:18px;overflow:hidden;border:1px solid var(--line);min-height:320px;background:var(--panel)}
+.mapbox iframe{width:100%;height:100%;min-height:320px;border:0;filter:invert(.92) hue-rotate(180deg) grayscale(.35)}
+footer{background:#000;color:var(--mute);text-align:center;padding:34px 5vw;font-size:13px}
+footer img{height:34px;display:block;margin:0 auto 14px}
+/* ---------- carrito ---------- */
+#fab{position:fixed;right:18px;bottom:18px;z-index:130;background:var(--red);color:#fff;border:0;border-radius:5px;padding:14px 22px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(228,48,59,.5);text-transform:uppercase;letter-spacing:.6px}
+#panel{position:fixed;top:0;right:0;height:100%;width:min(430px,100%);background:#0e0e11;color:#fff;z-index:150;border-left:2px solid var(--red);transform:translateX(105%);transition:transform .4s cubic-bezier(.7,0,.2,1);display:flex;flex-direction:column;padding:22px}
+#panel.open{transform:none}
+#panel h3{font-family:'Anton';font-weight:400;font-size:40px;text-transform:uppercase;color:#fff}
+#items{flex:1;overflow:auto;margin:14px 0;font-size:16px}
+.it{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line)}
+.q button{width:30px;height:30px;border-radius:5px;border:1px solid var(--line);background:var(--panel);color:#fff;cursor:pointer;font-size:18px;line-height:1}
+.q span{margin:0 8px}
+#panel input,#panel textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:8px;font-family:'Poppins';font-size:15px;background:var(--panel);color:#fff}
+.tot{display:flex;justify-content:space-between;font-family:'Anton';font-size:32px;margin-bottom:12px}
+.close{position:absolute;top:14px;right:18px;font-size:38px;background:none;border:0;cursor:pointer;color:#fff}
+@media(max-width:900px){
+  .logo img{height:26px}.pill{font-size:12px;padding:10px 14px}
+  .hero{--lw:90vw}.hlogo-wrap{top:12vh}
+  .hero .heroburger{width:82vw;top:calc(12vh + var(--lh) + 8vh)}
+  .blurb{display:none}.s1{left:3vw}.s2{right:3vw}
+  .slide{grid-template-columns:1fr;padding:18vh 6vw 8vh;align-content:center;gap:0}
+  .pic{width:min(100%,46vh * 1.25)}.giant{font-size:34vw}
+  .menu-wrap{grid-template-columns:1fr}.mnav{position:static;flex-direction:row;overflow-x:auto;gap:8px}
+  .mnav button{border-left:0;border-bottom:3px solid var(--line);padding:10px 12px;white-space:nowrap}.mnav button svg{display:none}
+  .cards{grid-template-columns:1fr 1fr}
+  .kids-in,.ways,.info-grid{grid-template-columns:1fr}
+  .lbl{font-size:9px;padding:5px 10px}
+  .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+}
+@media(max-width:560px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<!-- cinta de estado -->
+<div id="status"><div class="trk" id="strk"></div></div>
+
+<!-- loader -->
+<div id="loader">
+  <img id="lgo" src="img/logo.png" alt="La Burguesería Café">
+  <div class="lbar"><i id="lfill"></i></div>
+  <p>Abierto hasta las 00 hs</p>
+</div>
+<div id="wipe"></div>
+
+<header id="hdr">
+  <a class="logo" href="#top" data-go><img src="img/logo-sm.png" alt="La Burguesería Café"></a>
+  <nav><a class="pill alt" href="#visita" data-go>Visitanos</a><a class="pill" href="#menu" data-go>Pedir</a></nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <h1 class="hlogo-wrap"><img id="hlogo" src="img/logo.png" alt="La Burguesería Café"></h1>
+  <span class="sticker s1" id="st1">¡Smash!</span>
+  <span class="sticker s2" id="st2">Hasta las 00 hs</span>
+  <div class="heroburger" id="heroburger">
+    <div class="hb-glow"></div><div class="hb-disc"></div>
+    <div class="hb-tilt"><div class="hb-card" id="hbcard"><img src="img/burger-hero.webp" alt="Hamburguesa con papas y salsa de LaBurguesería"></div></div>
+    <div class="hb-badge"><svg viewBox="0 0 200 200"><defs><path id="circ" d="M100 100m-72 0a72 72 0 1 1 144 0a72 72 0 1 1-144 0"/></defs><circle class="hb-c" cx="100" cy="100" r="96"/><text><textPath href="#circ" startOffset="0" textLength="440" lengthAdjust="spacing">SMASH · JUGOSA · CRUJIENTE · </textPath></text><text x="100" y="118" text-anchor="middle" style="font-size:52px">🔥</text></svg></div>
+    <div class="hb-f hf1"><div id="hf1"></div></div>
+    <div class="hb-f hf2"><div id="hf2"></div></div>
+    <div class="hb-f hf3"><div id="hf3"></div></div>
+  </div>
+  <p class="blurb l">Smash de carne, apoyada en plancha caliente hasta quedar jugosa y crocante en los bordes.</p>
+  <p class="blurb r">Con queso derretido y nuestra salsa de la casa, en Río Gallegos desde la mañana hasta la medianoche.</p>
+  <span class="scrollhint">Scrolleá ↓</span>
+</section>
+
+<!-- cinta -->
+<div class="band"><div id="band"></div></div>
+
+<!-- ESTRELLAS -->
+<section class="stars" id="stars">
+  <div class="stars-top"><span class="eyebrow">Las estrellas de la casa</span></div>
+  <div class="track" id="track">
+    <article class="slide">
+      <div class="giant">La Criolla</div>
+      <div class="pic disc big"><img src="img/criolla.webp" alt="La Criolla: doble carne, provolone, morrón asado y mayochimi"></div>
+      <div class="info"><span class="n">01</span><h3>La Criolla</h3>
+        <p>Doble carne de 120 g, queso provolone, morrón asado, cebolla y salsa mayochimi.</p>
+        <div class="row2"><span class="ptag">$12.500*</span><button class="pill" data-k="criolla">Sumar al pedido</button></div></div>
+    </article>
+    <article class="slide">
+      <div class="giant">Chesse Burger</div>
+      <div class="pic disc two ch"><img class="b1" src="img/chesse-burger.webp" alt="Chesse Burger"><img class="b2" src="img/chesse-bag.webp" alt="Papas corrugadas en bolsa de LaBurguesería"></div>
+      <div class="info"><span class="n">02</span><h3>Chesse Burger + papas</h3>
+        <p>La clásica de la casa con cheddar derretido, acompañada de papas. Promo de lunes a miércoles.</p>
+        <div class="row2"><span class="ptag">$7.999</span><button class="pill" data-k="chesse">Sumar al pedido</button></div></div>
+    </article>
+    <article class="slide">
+      <div class="giant">Combo Pollo</div>
+      <div class="pic disc two"><img class="b1" src="img/pollo.webp" alt="Hamburguesa de pollo crispy con cheddar"><img class="b2" src="img/pollo.webp" alt="" aria-hidden="true"></div>
+      <div class="info"><span class="n">03</span><h3>Combo Pollo</h3>
+        <p>Dos hamburguesas simples de pollo crispy con cheddar, más gaseosa.</p>
+        <div class="row2"><span class="ptag">$21.000</span><button class="pill" data-k="pollo">Sumar al pedido</button></div></div>
+    </article>
+    <article class="slide">
+      <div class="giant">Smash + Papas</div>
+      <div class="pic disc"><img src="img/burger-hero.webp" alt="Smash con papas y salsa"></div>
+      <div class="info"><span class="n">04</span><h3>Smash + papas</h3>
+        <p>Smash de la plancha con cheddar, papas corrugadas y salsa de la casa para mojar.</p>
+        <div class="row2"><span class="ptag">$9.800*</span><button class="pill" data-k="smash">Sumar al pedido</button></div></div>
+    </article>
+  </div>
+  <div class="stars-bar"><i id="sprog"></i></div>
+</section>
+
+<!-- ANATOMÍA -->
+<section class="explode" id="explode">
+  <h2>Anatomía de <em>La Criolla</em></h2>
+  <div class="burger" id="xburger"></div>
+</section>
+
+<!-- MENÚ -->
+<section class="menu" id="menu">
+  <span class="eyebrow">La carta</span>
+  <h2 class="big"><span class="mask"><span>Elegí</span></span><span class="mask"><span>lo tuyo</span></span></h2>
+  <p class="sub">Sumá lo que quieras y mandá el pedido directo por WhatsApp. Sin vueltas.</p>
+  <div class="menu-wrap">
+    <nav class="mnav" id="mnav"></nav>
+    <div id="mlist"></div>
+  </div>
+  <p class="note">* Precio de ejemplo. Los precios sin asterisco son los publicados en el Instagram del local.</p>
+</section>
+
+<!-- RESEÑAS -->
+<section class="reviews" id="reviews">
+  <div class="bgword">Reseñas</div>
+  <div class="rev-head">
+    <span class="eyebrow">Lo que dicen</span>
+    <h2 class="big"><span class="mask"><span>Clientes</span></span><span class="mask"><span>contentos</span></span></h2>
+    <span class="stat"><b>+15,6 mil</b> seguidores en Instagram</span>
+  </div>
+  <div class="cards" id="cards">
+    <div class="rcard"><span class="ej">EJEMPLO</span><div class="stars5">★★★★★</div><p>La Criolla es una locura. Carne jugosa y ese provolone con morrón… volvemos seguro.</p><span class="who">María G.</span></div>
+    <div class="rcard"><span class="ej">EJEMPLO</span><div class="stars5">★★★★★</div><p>Fuimos con los chicos y la Zona Kids nos salvó la tarde. Atención de diez.</p><span class="who">Lucas R.</span></div>
+    <div class="rcard"><span class="ej">EJEMPLO</span><div class="stars5">★★★★★</div><p>Abiertos hasta la medianoche, ideal después de trabajar. Las papas, crocantes.</p><span class="who">Sofía P.</span></div>
+    <div class="rcard"><span class="ej">EJEMPLO</span><div class="stars5">★★★★★</div><p>Pedimos por WhatsApp y llegó calentito. Rápido y todo perfecto.</p><span class="who">Diego M.</span></div>
+  </div>
+</section>
+
+<!-- ZONA KIDS -->
+<section class="kids" id="zonakids">
+  <div class="kids-in">
+    <div>
+      <span class="eyebrow">Para toda la familia</span>
+      <h2 class="big"><span class="mask"><span>Zona</span></span><span class="mask"><span>Kids</span></span></h2>
+      <p class="lead">Un espacio pensado para que los más chicos jueguen mientras la familia come tranquila. Con combo kids, sorteos y sorpresas en fechas especiales.</p>
+      <div class="chips"><span class="chip">🎁 Sorteos</span><span class="chip">⭐ Sorpresas</span><span class="chip">🍔 Combo Kids</span></div>
+    </div>
+    <div class="kpic">
+      <div class="frame"><img src="img/chesse-burger.webp" alt="Cheeseburger de LaBurguesería"></div>
+      <span class="kfl a">🎠</span><span class="kfl b">🎈</span><span class="kfl c">🍟</span>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO PEDIR / VISITA -->
+<section class="visit" id="visita">
+  <div class="head">
+    <span class="eyebrow">Pedí como quieras</span>
+    <h2 class="big"><span class="mask"><span>Tres formas de</span></span><span class="mask"><span>disfrutarla</span></span></h2>
+  </div>
+  <div class="ways">
+    <div class="way red"><span class="num">01</span><h3>Por WhatsApp</h3><p>Armá tu pedido en la carta y mandalo listo al local. Sin comisiones.</p><div class="phone"><div class="ph-h"><i>🍔</i>LaBurguesería</div><div class="bub">Hola! Quiero hacer un pedido:<br>• 2x La Criolla<br>• 1x Papas corrugadas<br><b>Total: $29.500</b></div><div class="bub in">¡Listo! Ya lo estamos preparando 🍔</div></div><a class="pill wht" href="#menu" data-go>Armar pedido</a></div>
+    <div class="way"><span class="num">02</span><h3>Uber Eats</h3><p>Encontrá a LaBurgue en Uber Eats y pedí desde la app, donde estés.</p><img class="bag" src="img/u-bag.jpg" alt=""><a class="pill alt" href="https://www.instagram.com/laburgueseriargl/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+    <div class="way"><span class="num">03</span><h3>En el local</h3><p>Av. Kirchner 1167, Río Gallegos. Con Zona Kids para toda la familia.</p><img class="bag" src="img/local.jpg" alt=""><a class="pill" href="https://www.google.com/maps/search/?api=1&query=Av.+Kirchner+1167+R%C3%ADo+Gallegos" target="_blank" rel="noopener">Cómo llegar</a></div>
+  </div>
+  <div class="info-grid">
+    <div class="hours">
+      <h4>Horarios</h4>
+      <ul><li>Lunes a domingo<b>09:00 – 00:00</b></li><li>Zona Kids<b>Todos los días</b></li><li>Delivery<b>Uber Eats / WhatsApp</b></li></ul>
+      <p class="addr">📍 Av. Kirchner 1167<br>Río Gallegos, Santa Cruz<br>Instagram: <b>@laburgueseriargl</b></p>
+    </div>
+    <div class="mapbox"><iframe title="Mapa de LaBurguesería" loading="lazy" src="https://www.google.com/maps?q=Av.+Kirchner+1167,+R%C3%ADo+Gallegos&output=embed"></iframe></div>
+  </div>
+</section>
+
+<footer>
+  <img src="img/logo-sm.png" alt="La Burguesería Café">
+  © LaBurguesería Café · Río Gallegos · Boceto de propuesta web
+</footer>
+
+<button id="fab" onclick="toggle(true)">🛒 Pedido (<span id="cnt">0</span>)</button>
+<aside id="panel">
+  <button class="close" onclick="toggle(false)">×</button>
+  <h3>Tu pedido</h3>
+  <div id="items"><p>Todavía no sumaste nada.</p></div>
+  <input id="name" placeholder="Tu nombre">
+  <textarea id="obs" rows="2" placeholder="Aclaraciones (sin cebolla, retiro, dirección de envío...)"></textarea>
+  <div class="tot"><span>Total</span><span id="total">$0</span></div>
+  <button class="pill" onclick="send()">Enviar por WhatsApp</button>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* arranca siempre desde arriba (si el navegador restaura el scroll, se desfasan las posiciones de las secciones fijas) */
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+scrollTo(0,0);
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== cinta de estado: abierto / cerrado según la hora de Río Gallegos ===== */
+(function(){
+  const h=+new Intl.DateTimeFormat('en-GB',{hour:'2-digit',hour12:false,timeZone:'America/Argentina/Rio_Gallegos'}).format(new Date())%24;
+  const open=h>=9;
+  const t=open?'Abierto ahora · hasta las 00:00':'Cerrado · abrimos a las 09:00';
+  const item=`<span><i class="dot"></i>${t}</span><span>Av. Kirchner 1167 · Río Gallegos</span><span>Zona Kids</span><span>Pedí por WhatsApp o Uber Eats</span>`;
+  $('#status').classList.toggle('closed',!open);
+  $('#strk').innerHTML=item.repeat(6);
+  gsap.to('#strk',{xPercent:-50,duration:60,ease:'none',repeat:-1});
+})();
+
+/* ===== cinta corrida de marca ===== */
+$('#band').innerHTML=('<span>Hamburguesas y mucho más</span><b>✦</b><span>Pasá por LaBurguesería</span><b>✦</b><span>Zona Kids</span><b>✦</b><span>Uber Eats</span><b>✦</b>').repeat(6);
+
+/* ===== ingredientes flotantes del hero ===== */
+const ING={
+ let:'<svg viewBox="0 0 200 240"><path d="M100 232C60 200 20 150 30 90C36 60 20 40 44 24C60 14 74 30 86 18C100 4 118 22 132 16C154 8 160 34 174 44C196 62 178 96 176 120C172 170 140 206 100 232Z" fill="#7ecb4a" stroke="#141414" stroke-width="5" stroke-linejoin="round"/><path d="M100 228C98 170 100 90 104 30" fill="none" stroke="#c9ee9b" stroke-width="9" stroke-linecap="round"/><path d="M100 170C70 150 56 120 48 92M100 140C130 122 150 100 158 74M100 100C80 86 70 66 66 46M102 96C122 82 136 62 142 44" fill="none" stroke="#4c9a2a" stroke-width="4" stroke-linecap="round"/></svg>',
+ tom:'<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#e5382d" stroke="#141414" stroke-width="5"/><circle cx="100" cy="100" r="74" fill="#f1594a"/><g fill="#ffb9ac"><ellipse cx="100" cy="52" rx="15" ry="26"/><ellipse cx="148" cy="88" rx="26" ry="15" transform="rotate(20 148 88)"/><ellipse cx="132" cy="144" rx="15" ry="26" transform="rotate(-30 132 144)"/><ellipse cx="68" cy="144" rx="15" ry="26" transform="rotate(30 68 144)"/><ellipse cx="52" cy="88" rx="26" ry="15" transform="rotate(-20 52 88)"/></g><g fill="#ffd23f"><circle cx="100" cy="50" r="4"/><circle cx="150" cy="88" r="4"/><circle cx="132" cy="146" r="4"/><circle cx="68" cy="146" r="4"/><circle cx="50" cy="88" r="4"/></g><circle cx="100" cy="100" r="12" fill="#fff3d6"/></svg>',
+ che:'<svg viewBox="0 0 220 200"><path d="M22 40L200 26L190 170L34 184Z" fill="#ffd23f" stroke="#141414" stroke-width="5" stroke-linejoin="round"/><g fill="#f2b705"><circle cx="70" cy="80" r="14"/><circle cx="140" cy="60" r="9"/><circle cx="150" cy="128" r="16"/><circle cx="84" cy="146" r="8"/></g><path d="M22 40L200 26" stroke="#fff3a8" stroke-width="6" stroke-linecap="round" fill="none"/></svg>'
+};
+$('#hf1').innerHTML=ING.let;$('#hf2').innerHTML=ING.tom;$('#hf3').innerHTML=ING.che;
+/* si existen las fotos realistas (PNG con fondo transparente), reemplazan a los dibujos */
+[['hf1','img/lechuga.webp'],['hf2','img/tomate.webp'],['hf3','img/queso.webp']].forEach(([id,src])=>{const im=new Image();im.alt='';im.onload=()=>{const el=document.getElementById(id);el.innerHTML='';el.appendChild(im)};im.src=src});
+
+/* ===== hamburguesa "La Criolla" en capas (fotos reales) ===== */
+const CAPS=[
+ {f:'bun-top',w:100,a:1.776,k:.85,ov:0,n:'Pan brioche tostado'},
+ {f:'salsa',w:74,a:1.916,k:.8,ov:.84,n:'Salsa mayochimi'},
+ {f:'pimiento-v2',w:100,a:3.957,k:.85,ov:.3,n:'Morrón asado'},
+ {f:'provolone',w:92,a:1.675,k:.8,ov:.55,n:'Provolone derretido'},
+ {f:'cebolla',w:90,a:2.542,k:.95,ov:.78,n:'Cebolla caramelizada'},
+ {f:'carne1',w:98,a:1.595,k:.48,ov:.62,n:'Carne 120 g'},
+ {f:'carne2',w:98,a:1.557,k:.48,ov:.66,n:'Carne 120 g'},
+ {f:'bun-bot',w:100,a:2.031,k:.72,ov:.55,n:'Base de pan'}
+];
+$('#xburger').innerHTML=CAPS.map((c,i)=>`<div class="layer" style="width:${c.w}%;margin-top:-${(c.ov*c.w*c.k/c.a).toFixed(2)}%;z-index:${CAPS.length-i}"><img src="img/cap-${c.f}.webp" alt="${c.n}" style="aspect-ratio:${(c.a/c.k).toFixed(3)}"><span class="lbl ${i%2?'l':'r'}">${c.n}</span></div>`).join('');
+$('#xburger').insertAdjacentHTML('beforeend','<img class="whole" src="img/criolla.webp" alt="La Criolla completa">');
+
+/* ===== smooth scroll ===== */
+const lenis=new Lenis({lerp:.09});
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+lenis.stop();
+$$('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();lenis.scrollTo(a.getAttribute('href'),{offset:-60,duration:1.6})}));
+let lastY=0;lenis.on('scroll',({scroll})=>{$('#hdr').classList.toggle('hide',scroll>lastY&&scroll>200);lastY=scroll});
+
+/* ===== carga: se revela el logo y se abre con un telón rojo ===== */
+gsap.set('#hlogo',{opacity:0,y:40});
+gsap.set(['#st1','#st2'],{scale:0});
+gsap.set('#heroburger',{y:-700,opacity:0});
+gsap.set(['.blurb','.scrollhint','header','#status'],{opacity:0});
+const tl=gsap.timeline({delay:.2});
+tl.fromTo('#lgo',{scale:.86,opacity:0},{scale:1,opacity:1,duration:.9,ease:'power3.out'})
+  .to('#lfill',{width:'100%',duration:1.5,ease:'power2.inOut'},'-=.3')
+  .to('#wipe',{yPercent:-101,duration:.8,ease:'power4.inOut'},'+=.15')
+  .set('#loader',{display:'none'})
+  .to('#wipe',{yPercent:-202,duration:.8,ease:'power4.inOut'})
+  .to('#hlogo',{opacity:1,y:0,duration:1,ease:'power4.out'},'-=.7')
+  .to('#heroburger',{y:0,opacity:1,duration:1.1,ease:'bounce.out'},'-=.6')
+  .to(['#st1','#st2'],{scale:1,duration:.7,ease:'elastic.out(1,.5)',stagger:.15},'-=.6')
+  .to(['.blurb','.scrollhint','header','#status'],{opacity:1,duration:.8,stagger:.1},'-=.4')
+  .add(()=>{ScrollTrigger.refresh();initScroll();ScrollTrigger.refresh();lenis.start();setTimeout(()=>ScrollTrigger.refresh(),1500)});   // se habilita el scroll recién cuando las secciones fijas ya están armadas
+
+/* ===== hero: inclinación 3D con el mouse ===== */
+addEventListener('pointermove',e=>{
+  const mx=e.clientX/innerWidth-.5,my=e.clientY/innerHeight-.5;
+  gsap.to('#hbcard',{rotationY:mx*22,rotationX:-my*16,duration:.7,ease:'power3.out'});
+  gsap.to('.hb-f',{x:i=>-mx*[70,-55,40][i]*1.6,y:i=>-my*[70,-55,40][i]*1.6,duration:.9,ease:'power3.out'});
+  gsap.to('.hb-glow',{x:mx*40,y:my*30,duration:1});
+});
+
+/* ===== animaciones de scroll ===== */
+function initScroll(){
+  /* hero */
+  gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}})
+    .to('#heroburger',{y:-110,scale:1.45,rotate:4,ease:'none'},0)
+    .to('#hlogo',{y:-120,opacity:.15,ease:'none'},0)
+    .to('#st1',{y:-200,rotate:-30,ease:'none'},0)
+    .to('#st2',{y:-120,rotate:25,ease:'none'},0)
+    .to('.blurb',{opacity:0,ease:'none'},0);
+
+  /* cinta de marca: se mueve con el scroll */
+  gsap.to('#band',{xPercent:-30,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+
+  /* estrellas: recorrido horizontal fijo */
+  const track=$('#track'),n=4;
+  const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
+    onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}});
+  st.to(track,{xPercent:-75,ease:'none'},0)
+    .to('.giant',{x:'-6vw',ease:'none'},0)
+    .to('.pic:not(.two) img',{rotate:(i)=>i%2?-4:4,scale:1.06,ease:'none'},0)
+    .fromTo('.pic.two .b1',{rotation:-8,y:16},{rotation:-3,y:-16,ease:'none'},0)
+    .fromTo('.pic.two .b2',{rotation:7,y:-12},{rotation:10,y:18,ease:'none'},0);
+
+  /* anatomía: la burger se desarma capa por capa */
+  gsap.set('#xburger',{xPercent:-50,yPercent:-50});
+  const xl=$$('#xburger .layer');
+  const Y=[];
+  const calcY=()=>{
+    const n=xl.length,H=xl.map(l=>l.offsetHeight),T=xl.map(l=>l.offsetTop),sumH=H.reduce((x,y)=>x+y,0),gap=Math.max(-8,Math.min(8,(innerHeight*.66-sumH)/(n-1)));
+    const tot=H.reduce((a,b)=>a+b,0)+gap*(n-1);
+    const cc=(T[0]+T[n-1]+H[n-1])/2;
+    let top=cc-tot/2;
+    xl.forEach((l,i)=>{Y[i]=top-T[i];top+=H[i]+gap});
+  };
+  const xt=gsap.timeline({scrollTrigger:{trigger:'#explode',start:'top top',end:'+=170%',pin:true,anticipatePin:1,scrub:.5,invalidateOnRefresh:true,
+    onLeaveBack:()=>xt.progress(0),onLeave:()=>xt.progress(1)}});   // al salir por arriba queda siempre armada; por abajo, abierta
+  xl.forEach((l,i)=>xt.fromTo(l,{y:0},{y:()=>{if(i===0)calcY();return Y[i]},ease:'none',duration:1},.25));   // espera cerrada un tramo y recién ahí se abre
+  $$('.lbl').forEach((l,i)=>xt.fromTo(l,{opacity:0},{opacity:1,ease:'none',duration:.15},.6+i*.07));
+  xt.fromTo('#xburger .whole',{opacity:1},{opacity:0,ease:'none',duration:.14},.25);   // la foto real se transforma en las capas
+  xt.fromTo(xl,{opacity:0},{opacity:1,ease:'none',duration:.14},.25);
+  xt.fromTo('#xburger',{scale:1.95},{scale:1,ease:'none',duration:1},.25);   // cerrada se ve grande y se achica al abrirse
+  xt.to({},{duration:.25});
+
+  /* títulos con máscara */
+  $$('.mask>span').forEach(s=>gsap.from(s,{yPercent:110,duration:1,ease:'power4.out',scrollTrigger:{trigger:s.closest('.mask'),start:'top 90%'}}));
+
+  /* menú: nav pegajoso con scroll-spy y filas que entran */
+  $$('.mblock').forEach(b=>{
+    ScrollTrigger.create({trigger:b,start:'top 45%',end:'bottom 45%',onToggle:s=>{if(s.isActive)$$('#mnav button').forEach(x=>x.classList.toggle('on',x.dataset.t===b.id))}});
+    gsap.from(b.querySelectorAll('.mcard'),{y:36,opacity:0,stagger:.07,duration:.7,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 80%'}});
+  });
+
+  /* reseñas: las tarjetas giran mientras pasás */
+  $$('.rcard').forEach((c,i)=>{
+    const a=i%2?9:-9;
+    gsap.fromTo(c,{rotation:a,y:60},{keyframes:[{rotation:0,y:0,duration:.5},{rotation:-a*.6,y:-30,duration:.5}],ease:'none',scrollTrigger:{trigger:'#cards',start:'top 100%',end:'bottom 0%',scrub:true}});
+  });
+  gsap.to('.bgword',{xPercent:-8,ease:'none',scrollTrigger:{trigger:'#reviews',start:'top bottom',end:'bottom top',scrub:true}});
+
+  /* zona kids */
+  gsap.from('.kpic .frame',{rotation:-8,y:80,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#zonakids',start:'top 60%'}});
+  gsap.from('.kfl',{scale:0,stagger:.15,duration:.7,ease:'back.out(3)',scrollTrigger:{trigger:'#zonakids',start:'top 55%'}});
+  gsap.from('.chip',{y:30,opacity:0,stagger:.1,scrollTrigger:{trigger:'.chips',start:'top 90%'}});
+
+  /* cómo pedir */
+  gsap.from('.way',{y:60,opacity:0,stagger:.15,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.ways',start:'top 85%'}});
+  gsap.from('.hours,.mapbox',{y:50,opacity:0,stagger:.15,duration:.8,scrollTrigger:{trigger:'.info-grid',start:'top 88%'}});
+}
+/* se recalculan las posiciones cuando termina de cargar todo (fuentes e imágenes) y si cambia el tamaño de la ventana */
+addEventListener('load',()=>{ScrollTrigger.refresh();setTimeout(()=>ScrollTrigger.refresh(),600)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());
+document.querySelectorAll('img').forEach(im=>{if(!im.complete)im.addEventListener('load',()=>ScrollTrigger.refresh(),{once:true})});
+
+/* ===== cursor con ingredientes ===== */
+const FORK='<svg viewBox="0 0 30 64"><path d="M3 2.5Q3 1.5 4.5 1.5T6 2.5V15H8.6V2.5Q8.6 1.5 10 1.5T11.5 2.5V15H14V2.5Q14 1.5 15.5 1.5T17 2.5V15H19.6V2.5Q19.6 1.5 21 1.5T22.5 2.5V15Q22.5 26 17.5 28V34H8V28Q3 26 3 15Z" transform="translate(1.5 0)" fill="#eeeef3" stroke="#141414" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="33" width="10" height="29" rx="5" fill="#e4303b" stroke="#141414" stroke-width="2"/></svg>';
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const cur=$('#cur');let px=null,py=null;
+  document.documentElement.classList.add('fork');cur.innerHTML=FORK;gsap.set(cur.firstChild,{rotation:-30,transformOrigin:'50% 4%'});
+  const qx=gsap.quickTo(cur,'x',{duration:.18,ease:'power3'}),qy=gsap.quickTo(cur,'y',{duration:.18,ease:'power3'});
+  addEventListener('pointermove',e=>{
+    gsap.to(cur,{opacity:1,duration:.3,overwrite:'auto'});
+    qx(e.clientX);qy(e.clientY);
+    px=e.clientX;py=e.clientY;
+  });
+  document.addEventListener('pointerleave',()=>gsap.to(cur,{opacity:0,duration:.3}));
+  addEventListener('pointerdown',()=>{gsap.to(cur.firstChild,{y:14,duration:.09,yoyo:true,repeat:1,ease:'power2.out'})});
+  document.addEventListener('pointerover',e=>{const t=e.target.closest('a,button,.rcard,.way');gsap.to(cur,{scale:t?1.25:1,duration:.3})});
+}
+
+/* ===== menú ===== */
+const WA='5492966000000'; // número de ejemplo
+const CATS=[
+ {id:'combos',t:'Combos',d:'Para compartir o para vos solo.',ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>'},
+ {id:'burgers',t:'Burgers',d:'Hechas al momento en plancha.',ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11a9 7 0 0 1 18 0Z"/><path d="M3 15h18"/><path d="M4 18h16a0 0 0 0 1 0 0 3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/></svg>'},
+ {id:'papas',t:'Papas',d:'Corrugadas y bien crocantes.',ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 10h12l-1.5 11h-9L6 10Z"/><path d="M8 10 7 3M12 10V2M16 10l1-7"/></svg>'},
+ {id:'kids',t:'Kids',d:'Para los más chicos de la casa.',ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 14a5 5 0 0 0 8 0"/><path d="M9 9.5h.01M15 9.5h.01"/></svg>'},
+ {id:'bebidas',t:'Bebidas',d:'Bien frías.',ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 6h12l-1.5 15h-9L6 6Z"/><path d="M12 6l2-4h3"/></svg>'}
+];
+const ITEMS=[
+ {k:'familiar',c:'combos',n:'Combo Familiar',d:'2 hamburguesas simples (cheese, bacon o ¼ de libra), 1 hamburguesa kids, nuggets, 4 gaseosas y papas para compartir.',p:39900,b:'Familiar'},
+ {k:'pollo',c:'combos',n:'Combo Pollo',d:'2 hamburguesas simples de pollo crispy más gaseosa.',p:21000},
+ {k:'chesse',c:'combos',n:'Chesse Burger + papas',d:'Cheese burger simple con papas. Promo de lunes a miércoles.',p:7999,b:'Promo'},
+ {k:'criolla',c:'burgers',n:'La Criolla',d:'Doble carne 120 g, provolone, morrón asado, cebolla y mayochimi.',p:12500,e:1,b:'Estrella'},
+ {k:'cheese',c:'burgers',n:'Cheese Burger',d:'Carne smash, cheddar derretido y la salsa de la casa.',p:6500,e:1},
+ {k:'bacon',c:'burgers',n:'Bacon Burger',d:'Carne smash, cheddar y panceta crocante.',p:7500,e:1},
+ {k:'cuarto',c:'burgers',n:'¼ de Libra',d:'La más grande de la carta, con cheddar y toppings clásicos.',p:9800,e:1},
+ {k:'smash',c:'burgers',n:'Smash + papas',d:'Smash con cheddar, papas corrugadas y salsa para mojar.',p:9800,e:1},
+ {k:'papasc',c:'papas',n:'Papas corrugadas',d:'Porción para compartir.',p:4500,e:1},
+ {k:'papasch',c:'papas',n:'Papas cheddar & bacon',d:'Bañadas en cheddar y panceta.',p:6800,e:1},
+ {k:'kidsc',c:'kids',n:'Combo Kids',d:'Mini hamburguesa, papas y bebida.',p:7200,e:1},
+ {k:'nuggets',c:'kids',n:'Nuggets Kids',d:'6 nuggets con papas y bebida.',p:6900,e:1},
+ {k:'gas',c:'bebidas',n:'Gaseosa 500 ml',d:'Línea completa.',p:2500,e:1},
+ {k:'cerv',c:'bebidas',n:'Cerveza',d:'Lata 473 ml.',p:3800,e:1},
+ {k:'shake',c:'bebidas',n:'Milkshake',d:'Vainilla, chocolate o frutilla.',p:5200,e:1}
+];
+const IMG={familiar:['combo-familiar.webp'],pollo:['pollo.webp'],chesse:['chesse-burger.webp'],criolla:['criolla.webp'],cheese:['chesse-burger.webp'],smash:['burger-hero.webp'],papasc:['chesse-bag.webp'],papasch:['chesse-bag.webp'],kidsc:['combo-kids.webp']};
+const EMO={bacon:'🥓',cuarto:'🍔',nuggets:'🍗',gas:'🥤',cerv:'🍺',shake:'🥛'};
+const pic=i=>{const m=IMG[i.k];return `<div class="mimg${m&&m[1]?' cv':''}">${i.b?`<span class="mtag">${i.b}</span>`:''}${m?`<img src="img/${m[0]}" alt="${i.n}" loading="lazy">`:`<span class="emo">${EMO[i.k]||'🍔'}</span>`}</div>`};
+const fmt=n=>'$'+n.toLocaleString('es-AR');
+$('#mnav').innerHTML=CATS.map(c=>`<button data-t="${c.id}">${c.ic}<span>${c.t}</span></button>`).join('');
+$('#mlist').innerHTML=CATS.map(c=>`<div class="mblock" id="${c.id}"><h3>${c.ic}${c.t}</h3><p class="mdesc">${c.d}</p><div class="mgrid">${ITEMS.filter(i=>i.c===c.id).map(i=>`<div class="mcard">${pic(i)}<div class="mbody"><h4>${i.n}</h4><p>${i.d}</p><div class="mfoot"><span class="pr">${fmt(i.p)}${i.e?'*':''}</span><button class="add" data-k="${i.k}" aria-label="Sumar ${i.n}">+ Sumar</button></div></div></div>`).join('')}</div></div>`).join('');
+$$('#mnav button').forEach(b=>b.addEventListener('click',()=>lenis.scrollTo('#'+b.dataset.t,{offset:-170,duration:1.2})));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)add(b.dataset.k)});
+
+/* ===== carrito ===== */
+let cart={};
+function add(k){cart[k]=(cart[k]||0)+1;draw();gsap.fromTo('#fab',{scale:1.25},{scale:1,duration:.5,ease:'elastic.out(1,.4)'})}
+function chg(k,d){cart[k]+=d;if(cart[k]<=0)delete cart[k];draw()}
+function draw(){
+  const ks=Object.keys(cart);let t=0,n=0;
+  $('#items').innerHTML=ks.length?ks.map(k=>{const p=ITEMS.find(i=>i.k===k);t+=p.p*cart[k];n+=cart[k];
+    return `<div class="it"><div>${p.n}<br><small>${fmt(p.p)}</small></div><div class="q"><button onclick="chg('${k}',-1)">−</button><span>${cart[k]}</span><button onclick="chg('${k}',1)">+</button></div></div>`}).join(''):'<p>Todavía no sumaste nada.</p>';
+  $('#total').textContent=fmt(t);$('#cnt').textContent=n;
+}
+function toggle(o){$('#panel').classList.toggle('open',o);o?lenis.stop():lenis.start()}
+function send(){
+  const ks=Object.keys(cart);if(!ks.length)return alert('Sumá algo al pedido primero');
+  let t=0;const lines=ks.map(k=>{const p=ITEMS.find(i=>i.k===k);t+=p.p*cart[k];return `• ${cart[k]}x ${p.n} (${fmt(p.p*cart[k])})`});
+  const msg=`Hola LaBurguesería! Quiero hacer un pedido:\n${lines.join('\n')}\n\nTotal: ${fmt(t)}\nNombre: ${$('#name').value||'-'}\nNotas: ${$('#obs').value||'-'}`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+</script>
+</body>
+</html>
