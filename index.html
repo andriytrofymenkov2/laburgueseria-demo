@@ -136,7 +136,7 @@ nav{display:flex;gap:10px;align-items:center}
 .info .row2{display:flex;gap:16px;align-items:center;margin-top:22px;flex-wrap:wrap}
 .ptag{font-family:'Anton';font-size:clamp(24px,2.4vw,36px);background:var(--red);padding:4px 16px;border-radius:4px;transform:skewX(-8deg);display:inline-block}
 .stars-bar{position:absolute;left:6vw;right:6vw;bottom:5vh;height:3px;background:#232327;z-index:6}
-.stars-bar i{display:block;height:100%;width:0;background:var(--red)}
+.stars-bar i{display:block;height:100%;width:100%;background:var(--red);transform:scaleX(0);transform-origin:0 50%;will-change:transform}
 /* ---------- anatomía ---------- */
 .explode{position:relative;height:100vh;background:radial-gradient(ellipse 45% 55% at 50% 60%,rgba(228,48,59,.3),transparent 70%),#0a0a0c;overflow:hidden;display:grid;place-items:center}
 .explode h2{position:absolute;top:calc(34px + 4.5vh);left:0;right:0;text-align:center;font-family:'Anton';font-weight:400;font-size:clamp(34px,4.6vw,74px);color:#fff;text-transform:uppercase;line-height:.98;z-index:2}
@@ -418,6 +418,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   .mtag{font-size:9px;padding:4px 8px;top:8px;left:8px}
 }
 .paused,.paused *,.paused *::before,.paused *::after{animation-play-state:paused!important}
+@media(min-width:701px){.pic img,.giant{will-change:transform}}
 </style>
 </head>
 <body>
@@ -709,9 +710,10 @@ function initScroll(){
   /* estrellas: recorrido horizontal fijo */
   const track=$('#track'),n=4;
   ScrollTrigger.config({ignoreMobileResize:true});
+  const sprog=$('#sprog');
   gsap.matchMedia().add('(min-width:701px)',()=>{
   const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
-    onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}});
+    onUpdate:s=>{sprog.style.transform=`scaleX(${s.progress})`}}});
   st.to(track,{xPercent:-75,ease:'none'},0)
     .to('.giant',{x:'-6vw',ease:'none'},0)
     .to('.pic:not(.two) img',{rotate:(i)=>i%2?-4:4,scale:1.06,ease:'none'},0)
@@ -769,9 +771,10 @@ function initScroll(){
   gsap.from('.hours,.mapbox',{y:50,opacity:0,stagger:.15,duration:.8,scrollTrigger:{trigger:'.info-grid',start:'top 88%'}});
 }
 /* se recalculan las posiciones cuando termina de cargar todo (fuentes e imágenes) y si cambia el tamaño de la ventana */
-addEventListener('load',()=>{ScrollTrigger.refresh();setTimeout(()=>ScrollTrigger.refresh(),600)});
+addEventListener('load',()=>{ScrollTrigger.refresh();setTimeout(()=>ScrollTrigger.refresh(),600);document.querySelectorAll('.track img,#xburger img').forEach(i=>{if(i.decode)i.decode().catch(()=>{})})});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());
-document.querySelectorAll('img').forEach(im=>{if(!im.complete)im.addEventListener('load',()=>ScrollTrigger.refresh(),{once:true})});
+let rq;function softRefresh(){clearTimeout(rq);rq=setTimeout(()=>{if(Math.abs(lenis.velocity)>.05||lenis.isScrolling){softRefresh();return}ScrollTrigger.refresh()},350)}
+document.querySelectorAll('img').forEach(im=>{if(!im.complete)im.addEventListener('load',softRefresh,{once:true})});
 
 /* ===== cursor con ingredientes ===== */
 const FORK='<svg viewBox="0 0 30 64"><path d="M3 2.5Q3 1.5 4.5 1.5T6 2.5V15H8.6V2.5Q8.6 1.5 10 1.5T11.5 2.5V15H14V2.5Q14 1.5 15.5 1.5T17 2.5V15H19.6V2.5Q19.6 1.5 21 1.5T22.5 2.5V15Q22.5 26 17.5 28V34H8V28Q3 26 3 15Z" transform="translate(1.5 0)" fill="#eeeef3" stroke="#141414" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="33" width="10" height="29" rx="5" fill="#e4303b" stroke="#141414" stroke-width="2"/></svg>';
