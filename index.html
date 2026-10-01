@@ -94,10 +94,10 @@ nav{display:flex;gap:10px;align-items:center}
 .blurb.l{left:3vw}.blurb.r{right:3vw;text-align:right}
 .scrollhint{position:absolute;bottom:2.2vh;left:50%;transform:translateX(-50%);z-index:6;font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.6}
 /* ---------- cinta corrida ---------- */
-.band{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0 12px;position:relative;z-index:6;border-top:3px solid #fff;border-bottom:3px solid #fff}
-.band div{display:inline-flex;will-change:transform;backface-visibility:hidden;animation:bandmove 24s linear infinite;font-family:'Anton';font-size:clamp(26px,3.4vw,46px);letter-spacing:1px;text-transform:uppercase}
+.band{contain:layout paint;background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0 12px;position:relative;z-index:6;border-top:3px solid #fff;border-bottom:3px solid #fff}
+.band div{display:inline-flex;will-change:transform;backface-visibility:hidden;animation:bandmove 24s linear infinite;transform:translate3d(0,0,0);font-family:'Anton';font-size:clamp(26px,3.4vw,46px);letter-spacing:1px;text-transform:uppercase}
 .band span{padding:0 22px}
-@keyframes bandmove{from{transform:translate3d(0,0,0)}to{transform:translate3d(-16.6667%,0,0)}}
+@keyframes bandmove{from{transform:translate3d(0,0,0)}to{transform:translate3d(-33.3333%,0,0)}}
 @media(prefers-reduced-motion:reduce){.band div{animation:none}}.band b{font-weight:400;color:var(--ink)}
 /* ---------- estrellas (scroll horizontal) ---------- */
 .stars{position:relative;height:100vh;background:radial-gradient(ellipse 60% 50% at 30% 55%,rgba(228,48,59,.16),transparent 70%),#08080a;overflow:hidden}
@@ -306,6 +306,7 @@ footer img{height:34px;display:block;margin:0 auto 14px}
 .send svg{width:22px;height:22px}
 .fine{font-size:12px;color:var(--mute);text-align:center;margin-top:8px}
 #toast{position:fixed;left:50%;bottom:24px;z-index:160;transform:translate(-50%,160%);display:flex;align-items:center;gap:14px;background:#fff;color:var(--ink);border-radius:40px;padding:8px 8px 8px 20px;font-weight:600;font-size:14px;box-shadow:0 14px 40px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.2,.3,1);max-width:calc(100vw - 24px);white-space:nowrap}
+#toast:not(.on){opacity:0;visibility:hidden;transition:transform .45s,opacity .2s,visibility 0s .45s}
 #toast.on{transform:translate(-50%,0)}
 #toast button{background:var(--red);color:#fff;border:0;border-radius:30px;padding:9px 16px;font-family:'Poppins';font-weight:700;font-size:13px;cursor:pointer}
 /* ---------- Burgui (agente) ---------- */
@@ -369,6 +370,10 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 @media(max-width:700px){
   .hf1{right:-3%;top:4%;width:20%}.hf2{right:-2%;bottom:4%;width:20%}.hf3{left:-2%;bottom:4%;width:20%}
   .track{will-change:transform;backface-visibility:hidden}
+  .hero{height:100svh;min-height:600px;--lw:84vw}
+  .hlogo-wrap{top:calc(34px + 16svh)}
+  .hero .heroburger{width:min(94vw,44svh);top:calc(34px + 16svh + var(--lh) + 13svh)}
+  .s1{top:calc(34px + 16svh + var(--lh) + 15svh)}.s2{top:calc(34px + 16svh + var(--lh) + 36svh)}
   .slide{padding:15vh 6vw 7vh;gap:10px}
   .explode .burger{--W:min(40vw,30vh)}
   .lbl{font-size:9px;padding:4px 7px;white-space:normal;line-height:1.2;max-width:calc(50vw - var(--hw) - 22px);text-align:center}
@@ -598,7 +603,7 @@ gsap.registerPlugin(ScrollTrigger);
 })();
 
 /* ===== cinta corrida de marca ===== */
-$('#band').innerHTML=('<span>Hamburguesas y mucho más</span><b>✦</b><span>Pasá por LaBurguesería</span><b>✦</b><span>Zona Kids</span><b>✦</b><span>Uber Eats</span><b>✦</b>').repeat(6);
+$('#band').innerHTML=('<span>Hamburguesas y mucho más</span><b>✦</b><span>Pasá por LaBurguesería</span><b>✦</b><span>Zona Kids</span><b>✦</b><span>Uber Eats</span><b>✦</b>').repeat(3);
 
 /* ===== ingredientes flotantes del hero ===== */
 const ING={
