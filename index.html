@@ -380,15 +380,21 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 @media(max-width:560px){.cards{grid-template-columns:1fr}}
 @media(max-width:700px){
   .hf1{right:-3%;top:4%;width:20%}.hf2{right:-2%;bottom:4%;width:20%}.hf3{left:-2%;bottom:4%;width:20%}
+  .hb-glow{filter:none;background:radial-gradient(closest-side,rgba(228,48,59,.45),transparent 80%)}
+  .layer{will-change:auto}.rcard{will-change:auto}
+  .pill.alt{backdrop-filter:none;background:rgba(7,7,9,.75)}
   .stars{height:auto;overflow:visible}
-  body.in-anat #burgui{opacity:0!important;pointer-events:none}
+  body.in-anat #burgui,body.at-hero #burgui{opacity:0!important;pointer-events:none}
   .stars-top{position:relative;top:auto;left:auto;right:auto;padding:10vh 6vw 0}
   .track{flex-direction:column;width:100%;height:auto;transform:none!important}
   .stars-bar{display:none}
   .hero{height:100svh;min-height:600px;--lw:84vw}
-  .hlogo-wrap{top:calc(120px + 10svh)}
-  .hero .heroburger{width:min(94vw,44svh);top:calc(120px + 10svh + var(--lh) + 10svh)}
-  .s1{top:calc(120px + 10svh + var(--lh) + 3svh);left:4vw}.s2{top:calc(120px + 10svh + var(--lh) + 3svh);right:4vw}
+  .hero{--bw:min(90vw,42svh)}
+  .hlogo-wrap{top:calc(98px + 5svh)}
+  .hero .heroburger{width:var(--bw);top:calc(98px + 5svh + var(--lh) + 7svh)}
+  .s1,.s2{top:calc(98px + 5svh + var(--lh) + 7svh + var(--bw) * .86 + 3svh)}
+  .s1{left:7vw}.s2{right:7vw}
+  .scrollhint{left:7vw;transform:none}
   .slide{width:100%;height:auto;min-height:0;padding:5vh 6vw 7vh;grid-template-columns:1fr;gap:16px}
   .explode .burger{--W:min(36vw,30vh)}
   .lbl{font-size:9px;padding:6px 13px;white-space:normal;line-height:1.25;letter-spacing:.3px;background-image:radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px);background-size:6px 6px;background-position:2px 2px,calc(100% - 2px) 2px,2px calc(100% - 2px),calc(100% - 2px) calc(100% - 2px);max-width:calc(50vw - var(--hw) - 20px);text-align:center}
@@ -414,24 +420,24 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 
 <!-- loader -->
 <div id="loader">
-  <img id="lgo" src="img/logo.png" alt="La Burguesería Café">
+  <img id="lgo" src="img/logo.webp" alt="La Burguesería Café">
   <div class="lbar"><i id="lfill"></i></div>
 </div>
 <div id="wipe"></div>
 
 <header id="hdr">
-  <a class="logo" href="#top" data-go><img src="img/logo-sm.png" alt="La Burguesería Café"></a>
+  <a class="logo" href="#top" data-go><img src="img/logo-sm.webp" alt="La Burguesería Café"></a>
   <nav><a class="pill alt" href="#visita" data-go>Visitanos</a><a class="pill" href="#menu" data-go>Pedir</a></nav>
 </header>
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <h1 class="hlogo-wrap"><img id="hlogo" src="img/logo.png" alt="La Burguesería Café"></h1>
+  <h1 class="hlogo-wrap"><img id="hlogo" src="img/logo.webp" alt="La Burguesería Café"></h1>
   <span class="sticker s1" id="st1">¡Smash!</span>
   <span class="sticker s2" id="st2">Hasta las 00 hs</span>
   <div class="heroburger" id="heroburger">
     <div class="hb-glow"></div><div class="hb-disc"></div>
-    <div class="hb-tilt"><div class="hb-card" id="hbcard"><img src="img/burger-hero.webp" alt="Hamburguesa con papas y salsa de LaBurguesería"></div></div>
+    <div class="hb-tilt"><div class="hb-card" id="hbcard"><img decoding="async" src="img/burger-hero.webp" alt="Hamburguesa con papas y salsa de LaBurguesería"></div></div>
     <div class="hb-badge"><svg viewBox="0 0 200 200"><defs><path id="circ" d="M100 100m-72 0a72 72 0 1 1 144 0a72 72 0 1 1-144 0"/></defs><circle class="hb-c" cx="100" cy="100" r="96"/><text><textPath href="#circ" startOffset="0" textLength="440" lengthAdjust="spacing">SMASH · JUGOSA · CRUJIENTE · </textPath></text><text x="100" y="118" text-anchor="middle" style="font-size:52px">🔥</text></svg></div>
     <div class="hb-f hf1"><div id="hf1"></div></div>
     <div class="hb-f hf2"><div id="hf2"></div></div>
@@ -451,28 +457,28 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   <div class="track" id="track">
     <article class="slide">
       <div class="giant">La Criolla</div>
-      <div class="pic disc big"><img src="img/criolla.webp" alt="La Criolla: doble carne, provolone, morrón asado y mayochimi"></div>
+      <div class="pic disc big"><img decoding="async" src="img/criolla.webp" alt="La Criolla: doble carne, provolone, morrón asado y mayochimi"></div>
       <div class="info"><h3>La Criolla</h3>
         <p>Doble carne de 120 g, queso provolone, morrón asado, cebolla y salsa mayochimi.</p>
         <div class="row2"><span class="ptag">$12.500*</span><button class="pill" data-k="criolla">Sumar al pedido</button></div></div>
     </article>
     <article class="slide">
       <div class="giant">Chesse Burger</div>
-      <div class="pic disc two ch"><img class="b1" src="img/chesse-burger.webp" alt="Chesse Burger"><img class="b2" src="img/chesse-bag.webp" alt="Papas corrugadas en bolsa de LaBurguesería"></div>
+      <div class="pic disc two ch"><img decoding="async" class="b1" src="img/chesse-burger.webp" alt="Chesse Burger"><img decoding="async" class="b2" src="img/chesse-bag.webp" alt="Papas corrugadas en bolsa de LaBurguesería"></div>
       <div class="info"><h3>Chesse Burger + papas</h3>
         <p>La clásica de la casa con cheddar derretido, acompañada de papas. Promo de lunes a miércoles.</p>
         <div class="row2"><span class="ptag">$7.999</span><button class="pill" data-k="chesse">Sumar al pedido</button></div></div>
     </article>
     <article class="slide">
       <div class="giant">Combo Pollo</div>
-      <div class="pic disc two"><img class="b1" src="img/pollo.webp" alt="Hamburguesa de pollo crispy con cheddar"><img class="b2" src="img/pollo.webp" alt="" aria-hidden="true"></div>
+      <div class="pic disc two"><img decoding="async" class="b1" src="img/pollo.webp" alt="Hamburguesa de pollo crispy con cheddar"><img decoding="async" class="b2" src="img/pollo.webp" alt="" aria-hidden="true"></div>
       <div class="info"><h3>Combo Pollo</h3>
         <p>Dos hamburguesas simples de pollo crispy con cheddar, más gaseosa.</p>
         <div class="row2"><span class="ptag">$21.000</span><button class="pill" data-k="pollo">Sumar al pedido</button></div></div>
     </article>
     <article class="slide">
       <div class="giant">Smash + Papas</div>
-      <div class="pic disc"><img src="img/burger-hero.webp" alt="Smash con papas y salsa"></div>
+      <div class="pic disc"><img decoding="async" src="img/burger-hero.webp" alt="Smash con papas y salsa"></div>
       <div class="info"><h3>Smash + papas</h3>
         <p>Smash de la plancha con cheddar, papas corrugadas y salsa de la casa para mojar.</p>
         <div class="row2"><span class="ptag">$9.800*</span><button class="pill" data-k="smash">Sumar al pedido</button></div></div>
@@ -526,7 +532,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
       <div class="chips"><span class="chip">🎁 Sorteos</span><span class="chip">⭐ Sorpresas</span><span class="chip">🍔 Combo Kids</span></div>
     </div>
     <div class="kpic">
-      <div class="frame"><img src="img/chesse-burger.webp" alt="Cheeseburger de LaBurguesería"></div>
+      <div class="frame"><img loading="lazy" decoding="async" src="img/chesse-burger.webp" alt="Cheeseburger de LaBurguesería"></div>
       <span class="kfl a">🎠</span><span class="kfl b">🎈</span><span class="kfl c">🍟</span>
     </div>
   </div>
@@ -540,8 +546,8 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   </div>
   <div class="ways">
     <div class="way red"><span class="num">01</span><h3>Por WhatsApp</h3><p>Armá tu pedido en la carta y mandalo listo al local. Sin comisiones.</p><div class="phone"><div class="ph-h"><i>🍔</i>LaBurguesería</div><div class="bub">Hola! Quiero hacer un pedido:<br>• 2x La Criolla<br>• 1x Papas corrugadas<br><b>Total: $29.500</b></div><div class="bub in">¡Listo! Ya lo estamos preparando 🍔</div></div><a class="pill wht" href="#menu" data-go>Armar pedido</a></div>
-    <div class="way"><span class="num">02</span><h3>Uber Eats</h3><p>Encontrá a LaBurgue en Uber Eats y pedí desde la app, donde estés.</p><img class="bag" src="img/u-bag.jpg" alt=""><a class="pill alt" href="https://www.instagram.com/laburgueseriargl/" target="_blank" rel="noopener">Ver en Instagram</a></div>
-    <div class="way"><span class="num">03</span><h3>En el local</h3><p>Av. Kirchner 1167, Río Gallegos. Con Zona Kids para toda la familia.</p><img class="bag" src="img/local.jpg" alt=""><a class="pill" href="https://www.google.com/maps/search/?api=1&query=Av.+Kirchner+1167+R%C3%ADo+Gallegos" target="_blank" rel="noopener">Cómo llegar</a></div>
+    <div class="way"><span class="num">02</span><h3>Uber Eats</h3><p>Encontrá a LaBurgue en Uber Eats y pedí desde la app, donde estés.</p><img loading="lazy" decoding="async" class="bag" src="img/u-bag.jpg" alt=""><a class="pill alt" href="https://www.instagram.com/laburgueseriargl/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+    <div class="way"><span class="num">03</span><h3>En el local</h3><p>Av. Kirchner 1167, Río Gallegos. Con Zona Kids para toda la familia.</p><img loading="lazy" decoding="async" class="bag" src="img/local.jpg" alt=""><a class="pill" href="https://www.google.com/maps/search/?api=1&query=Av.+Kirchner+1167+R%C3%ADo+Gallegos" target="_blank" rel="noopener">Cómo llegar</a></div>
   </div>
   <div class="info-grid">
     <div class="hours">
@@ -554,7 +560,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 </section>
 
 <footer>
-  <img src="img/logo-sm.png" alt="La Burguesería Café">
+  <img loading="lazy" decoding="async" src="img/logo-sm.webp" alt="La Burguesería Café">
   © LaBurguesería Café · Río Gallegos · Boceto de propuesta web
 </footer>
 
@@ -643,8 +649,8 @@ const CAPS=[
  {f:'carne2',w:98,a:1.557,k:.48,ov:.66,n:'Carne 120 g'},
  {f:'bun-bot',w:100,a:2.031,k:.72,ov:.55,n:'Base de pan'}
 ];
-$('#xburger').innerHTML=CAPS.map((c,i)=>`<div class="layer" style="width:${c.w}%;margin-top:-${(c.ov*c.w*c.k/c.a).toFixed(2)}%;z-index:${CAPS.length-i}"><img src="img/cap-${c.f}.webp" alt="${c.n}" style="aspect-ratio:${(c.a/c.k).toFixed(3)}"><span class="lbl ${i%2?'l':'r'}">${c.n}</span></div>`).join('');
-$('#xburger').insertAdjacentHTML('beforeend','<img class="whole" src="img/criolla.webp" alt="La Criolla completa">');
+$('#xburger').innerHTML=CAPS.map((c,i)=>`<div class="layer" style="width:${c.w}%;margin-top:-${(c.ov*c.w*c.k/c.a).toFixed(2)}%;z-index:${CAPS.length-i}"><img decoding="async" src="img/cap-${c.f}.webp" alt="${c.n}" style="aspect-ratio:${(c.a/c.k).toFixed(3)}"><span class="lbl ${i%2?'l':'r'}">${c.n}</span></div>`).join('');
+$('#xburger').insertAdjacentHTML('beforeend','<img decoding="async" class="whole" src="img/criolla.webp" alt="La Criolla completa">');
 
 /* ===== smooth scroll ===== */
 const lenis=new Lenis({lerp:.09});
@@ -672,7 +678,7 @@ tl.fromTo('#lgo',{scale:.86,opacity:0},{scale:1,opacity:1,duration:.9,ease:'powe
   .add(()=>{ScrollTrigger.refresh();initScroll();ScrollTrigger.refresh();lenis.start();setTimeout(()=>ScrollTrigger.refresh(),1500);setTimeout(burguiIn,1200)});   // se habilita el scroll recién cuando las secciones fijas ya están armadas
 
 /* ===== hero: inclinación 3D con el mouse ===== */
-addEventListener('pointermove',e=>{
+if(matchMedia('(hover:hover) and (pointer:fine)').matches)addEventListener('pointermove',e=>{
   const mx=e.clientX/innerWidth-.5,my=e.clientY/innerHeight-.5;
   gsap.to('#hbcard',{rotationY:mx*22,rotationX:-my*16,duration:.7,ease:'power3.out'});
   gsap.to('.hb-f',{x:i=>-mx*[70,-55,40][i]*1.6,y:i=>-my*[70,-55,40][i]*1.6,duration:.9,ease:'power3.out'});
@@ -704,6 +710,7 @@ function initScroll(){
     .fromTo('.pic.two .b2',{rotation:7,y:-12},{rotation:10,y:18,ease:'none'},0);
   });
 
+  ScrollTrigger.create({trigger:'.hero',start:'top bottom',end:'bottom 55%',toggleClass:{targets:'body',className:'at-hero'}});
   /* anatomía: la burger se desarma capa por capa */
   ScrollTrigger.create({trigger:'#explode',start:'top 70%',end:'bottom 30%',toggleClass:{targets:'body',className:'in-anat'}});
   gsap.set('#xburger',{xPercent:-50,yPercent:-50});
@@ -814,7 +821,7 @@ const F=id=>document.getElementById(id);
 const SV='lb-datos';
 try{const d=JSON.parse(localStorage.getItem(SV)||'{}');['name','dir','dir2'].forEach(k=>{if(d[k])F(k).value=d[k]})}catch(e){}
 function saveD(){try{localStorage.setItem(SV,JSON.stringify({name:F('name').value,dir:F('dir').value,dir2:F('dir2').value}))}catch(e){}}
-const thumb=k=>{const m=IMG[k];return `<div class="th">${m?`<img src="img/${m[0]}" alt="">`:`<span>${EMO[k]||'🍔'}</span>`}</div>`};
+const thumb=k=>{const m=IMG[k];return `<div class="th">${m?`<img loading="lazy" decoding="async" src="img/${m[0]}" alt="">`:`<span>${EMO[k]||'🍔'}</span>`}</div>`};
 function add(k){cart[k]=(cart[k]||0)+1;draw();gsap.fromTo('#fab',{scale:1.2},{scale:1,duration:.6,ease:'elastic.out(1,.4)'});if(!F('panel').classList.contains('open'))toast(k)}
 let tt;
 function toast(k){const p=ITEMS.find(i=>i.k===k),t=F('toast');t.innerHTML=`<span>✓ <b>${p.n}</b> sumado</span><button onclick="toggle(true)">Ver pedido</button>`;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3500)}
@@ -901,7 +908,7 @@ gsap.set('.btop',{transformOrigin:'88% 100%'});
 function talk(n=3){gsap.fromTo('.btop',{rotation:0,y:0},{rotation:-8,y:-5,duration:.11,yoyo:true,repeat:n*2-1,ease:'power1.inOut',overwrite:true})}
 function blink(){gsap.to('.bew',{scaleY:.1,transformOrigin:'50% 50%',duration:.07,yoyo:true,repeat:1});setTimeout(blink,2200+Math.random()*3200)}
 setTimeout(blink,2000);
-addEventListener('pointermove',e=>{const r=F('bbtn').getBoundingClientRect(),o=F('chat').classList.contains('open')?$('#chat .cav').getBoundingClientRect():r;
+if(matchMedia('(hover:hover) and (pointer:fine)').matches)addEventListener('pointermove',e=>{const r=F('bbtn').getBoundingClientRect(),o=F('chat').classList.contains('open')?$('#chat .cav').getBoundingClientRect():r;
   const dx=e.clientX-(o.left+o.width/2),dy=e.clientY-(o.top+o.height*.4),d=Math.hypot(dx,dy)||1,k=Math.min(1,d/160)*3.2;
   gsap.to('.bpup',{x:dx/d*k,y:dy/d*k,duration:.3,overwrite:'auto'})});
 let bIn=false;
