@@ -185,6 +185,10 @@ nav{display:flex;gap:10px;align-items:center}
 .rev-head{position:relative;z-index:2;text-align:center;margin-bottom:34px}
 .rev-head .stat{display:inline-block;margin-top:14px;color:var(--mute);font-size:15px}
 .rev-head .stat b{color:#fff}
+.igbtn{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:9px 16px 9px 10px;border-radius:30px;background:linear-gradient(45deg,#f9a825,#e1306c 45%,#833ab4);color:#fff;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 8px 22px rgba(225,48,108,.35);transition:transform .2s}
+.igbtn:hover{transform:translateY(-2px)}
+.igbtn svg{width:22px;height:22px}
+.rev-head .stat{display:flex;flex-direction:column;align-items:flex-start}
 .cards{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .rcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;will-change:transform}
 .rcard:nth-child(2n){background:var(--red);border-color:var(--red)}
@@ -254,7 +258,7 @@ footer img{height:34px;display:block;margin:0 auto 14px}
 .ph h3{font-family:'Anton';font-weight:400;font-size:38px;line-height:1;text-transform:uppercase}
 .close{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:#fff;font-size:26px;line-height:1;cursor:pointer;flex:none}
 .close:hover{border-color:var(--red)}
-.pbody{flex:1;overflow:auto;padding:4px 22px 20px;overscroll-behavior:contain}
+.pbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:4px 22px 20px;overscroll-behavior:contain}
 .ps{padding:18px 0;border-bottom:1px dashed var(--line)}
 .ps:last-child{border-bottom:0}
 .pst{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
@@ -327,7 +331,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 #chat header small{font-size:12px;display:flex;align-items:center;gap:6px}
 #chat header small i{width:8px;height:8px;border-radius:50%;background:#7dff9b;box-shadow:0 0 0 3px rgba(125,255,155,.3)}
 .cx{margin-left:auto;background:rgba(0,0,0,.22);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer}
-#cmsgs{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain;background:radial-gradient(circle at 50% 0,rgba(228,48,59,.13),transparent 60%)}
+#cmsgs{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:16px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain;background:radial-gradient(circle at 50% 0,rgba(228,48,59,.13),transparent 60%)}
 .m{max-width:86%;padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.45}
 .m.bot{background:#1c1c21;border-bottom-left-radius:4px;align-self:flex-start}
 .m.me{background:var(--red);border-bottom-right-radius:4px;align-self:flex-end}
@@ -359,8 +363,15 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   .blurb{display:none}.s1{left:3vw}.s2{right:3vw}
   .slide{grid-template-columns:1fr;padding:18vh 6vw 8vh;align-content:center;gap:0}
   .pic{width:min(100%,46vh * 1.25)}.giant{font-size:34vw}
-  .menu-wrap{grid-template-columns:1fr}.mnav{position:static;flex-direction:row;overflow-x:auto;gap:8px}
-  .mnav button{border-left:0;border-bottom:3px solid var(--line);padding:10px 12px;white-space:nowrap}.mnav button svg{display:none}
+  .menu-wrap{grid-template-columns:1fr;gap:0}
+  .mnav{position:sticky;top:34px;z-index:110;flex-direction:row;overflow-x:auto;gap:8px;margin:0 -5vw 14px;padding:10px 5vw;background:rgba(10,10,12,.97);border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .mnav::-webkit-scrollbar{display:none}
+  .mnav button{flex:none;border:1.5px solid var(--line);border-radius:30px;padding:9px 14px;gap:7px;white-space:nowrap;font-size:12px;background:var(--panel)}
+  .mnav button svg{width:16px;height:16px}
+  .mnav button.on{background:var(--red);border-color:var(--red);color:#fff}
+  body.in-menu header{transform:translateY(-160%)}
+  .mimg img{filter:none}.mcard{transition:none}.mcard:hover{transform:none}
+  .mblock{padding-bottom:44px}
   .cards{grid-template-columns:1fr 1fr}
   .kids-in,.ways,.info-grid{grid-template-columns:1fr}
   .lbl{font-size:9px;padding:5px 10px}
@@ -369,14 +380,18 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 @media(max-width:560px){.cards{grid-template-columns:1fr}}
 @media(max-width:700px){
   .hf1{right:-3%;top:4%;width:20%}.hf2{right:-2%;bottom:4%;width:20%}.hf3{left:-2%;bottom:4%;width:20%}
-  .track{will-change:transform;backface-visibility:hidden}
+  .stars{height:auto;overflow:visible}
+  body.in-anat #burgui{opacity:0!important;pointer-events:none}
+  .stars-top{position:relative;top:auto;left:auto;right:auto;padding:10vh 6vw 0}
+  .track{flex-direction:column;width:100%;height:auto;transform:none!important}
+  .stars-bar{display:none}
   .hero{height:100svh;min-height:600px;--lw:84vw}
   .hlogo-wrap{top:calc(120px + 10svh)}
   .hero .heroburger{width:min(94vw,44svh);top:calc(120px + 10svh + var(--lh) + 10svh)}
-  .s1{top:calc(120px + 10svh + var(--lh) + 12svh)}.s2{top:calc(120px + 10svh + var(--lh) + 3svh);right:4vw}
-  .slide{padding:15vh 6vw 7vh;gap:10px}
-  .explode .burger{--W:min(40vw,30vh)}
-  .lbl{font-size:9px;padding:4px 7px;white-space:normal;line-height:1.2;max-width:calc(50vw - var(--hw) - 22px);text-align:center}
+  .s1{top:calc(120px + 10svh + var(--lh) + 3svh);left:4vw}.s2{top:calc(120px + 10svh + var(--lh) + 3svh);right:4vw}
+  .slide{width:100%;height:auto;min-height:0;padding:5vh 6vw 7vh;grid-template-columns:1fr;gap:16px}
+  .explode .burger{--W:min(36vw,30vh)}
+  .lbl{font-size:9px;padding:6px 13px;white-space:normal;line-height:1.25;letter-spacing:.3px;background-image:radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px),radial-gradient(circle,#fff 1.3px,transparent 1.8px);background-size:6px 6px;background-position:2px 2px,calc(100% - 2px) 2px,2px calc(100% - 2px),calc(100% - 2px) calc(100% - 2px);max-width:calc(50vw - var(--hw) - 20px);text-align:center}
   .hb-badge{left:-2%;width:19%}
   .kfl.a{left:-2%}.kfl.b{right:-2%}
   .lbl.r{left:calc(50% + var(--hw) + 12px)}.lbl.l{right:calc(50% + var(--hw) + 12px)}
@@ -490,7 +505,8 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   <div class="rev-head">
     <span class="eyebrow">Lo que dicen</span>
     <h2 class="big"><span class="mask"><span>Clientes</span></span><span class="mask"><span>contentos</span></span></h2>
-    <span class="stat"><b>+15,6 mil</b> seguidores en Instagram</span>
+    <div class="stat"><span><b>+15,6 mil</b> seguidores en Instagram</span>
+      <a class="igbtn" href="https://www.instagram.com/laburgueseriargl/" target="_blank" rel="noopener" aria-label="Instagram de LaBurguesería"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg>@laburgueseriargl</a></div>
   </div>
   <div class="cards" id="cards">
     <div class="rcard"><span class="ej">EJEMPLO</span><div class="stars5">★★★★★</div><p>La Criolla es una locura. Carne jugosa y ese provolone con morrón… volvemos seguro.</p><span class="who">María G.</span></div>
@@ -573,7 +589,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   <div class="bb" id="bbub"><button class="bx" aria-label="Cerrar mensaje">×</button>¡Hola! Soy <b>Burgui</b> 🍔<br>¿Te ayudo a elegir?</div>
   <button id="bbtn" aria-label="Chatear con Burgui, el asistente"><span class="bai">IA</span></button>
 </div>
-<section id="chat" aria-label="Chat con Burgui">
+<section id="chat" data-lenis-prevent aria-label="Chat con Burgui">
   <header><div class="cav"></div><div><b>Burgui</b><small><i></i>Asistente de LaBurguesería</small></div><button class="cx" aria-label="Cerrar chat">×</button></header>
   <div id="cmsgs" data-lenis-prevent></div>
   <div id="cquick"></div>
@@ -586,6 +602,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const MOB=()=>matchMedia('(max-width:700px)').matches;
 /* arranca siempre desde arriba (si el navegador restaura el scroll, se desfasan las posiciones de las secciones fijas) */
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 scrollTo(0,0);
@@ -677,14 +694,6 @@ function initScroll(){
   /* estrellas: recorrido horizontal fijo */
   const track=$('#track'),n=4;
   ScrollTrigger.config({ignoreMobileResize:true});
-  // celular: mismo recorrido hacia la derecha, pero liviano (solo se mueve la pista)
-  gsap.matchMedia().add('(max-width:700px)',()=>{
-    ScrollTrigger.normalizeScroll(true);   // el scroll táctil se procesa junto con la animación: sin saltos en la parte fija
-    gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=260%',pin:true,anticipatePin:1,scrub:.4,invalidateOnRefresh:true,
-      onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}})
-      .to(track,{xPercent:-75,ease:'none',force3D:true},0);
-    return()=>ScrollTrigger.normalizeScroll(false);
-  });
   gsap.matchMedia().add('(min-width:701px)',()=>{
   const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
     onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}});
@@ -696,6 +705,7 @@ function initScroll(){
   });
 
   /* anatomía: la burger se desarma capa por capa */
+  ScrollTrigger.create({trigger:'#explode',start:'top 70%',end:'bottom 30%',toggleClass:{targets:'body',className:'in-anat'}});
   gsap.set('#xburger',{xPercent:-50,yPercent:-50});
   const xl=$$('#xburger .layer');
   const Y=[];
@@ -719,9 +729,11 @@ function initScroll(){
   $$('.mask>span').forEach(s=>gsap.from(s,{yPercent:110,duration:1,ease:'power4.out',scrollTrigger:{trigger:s.closest('.mask'),start:'top 90%'}}));
 
   /* menú: nav pegajoso con scroll-spy y filas que entran */
+  ScrollTrigger.create({trigger:'#menu',start:'top 40px',end:'bottom top',toggleClass:{targets:'body',className:'in-menu'}});
   $$('.mblock').forEach(b=>{
-    ScrollTrigger.create({trigger:b,start:'top 45%',end:'bottom 45%',onToggle:s=>{if(s.isActive)$$('#mnav button').forEach(x=>x.classList.toggle('on',x.dataset.t===b.id))}});
-    gsap.from(b.querySelectorAll('.mcard'),{y:36,opacity:0,stagger:.07,duration:.7,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 80%'}});
+    ScrollTrigger.create({trigger:b,start:'top 45%',end:'bottom 45%',onToggle:s=>{if(!s.isActive)return;$$('#mnav button').forEach(x=>{const on=x.dataset.t===b.id;x.classList.toggle('on',on);
+      if(on&&MOB()){const nv=$('#mnav');nv.scrollTo({left:x.offsetLeft-nv.clientWidth/2+x.offsetWidth/2,behavior:'smooth'})}})}});
+    if(!MOB())gsap.from(b.querySelectorAll('.mcard'),{y:36,opacity:0,stagger:.07,duration:.7,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 80%'}});
   });
 
   /* reseñas: las tarjetas giran mientras pasás */
@@ -789,11 +801,11 @@ const ITEMS=[
 ];
 const IMG={familiar:['combo-familiar.webp'],pollo:['pollo.webp'],chesse:['chesse-burger.webp'],criolla:['criolla.webp'],cheese:['chesse-burger.webp'],smash:['burger-hero.webp'],papasc:['chesse-bag.webp'],papasch:['chesse-bag.webp'],kidsc:['combo-kids.webp']};
 const EMO={bacon:'🥓',cuarto:'🍔',nuggets:'🍗',gas:'🥤',cerv:'🍺',shake:'🥛'};
-const pic=i=>{const m=IMG[i.k];return `<div class="mimg${m&&m[1]?' cv':''}">${i.b?`<span class="mtag">${i.b}</span>`:''}${m?`<img src="img/${m[0]}" alt="${i.n}" loading="lazy">`:`<span class="emo">${EMO[i.k]||'🍔'}</span>`}</div>`};
+const pic=i=>{const m=IMG[i.k];return `<div class="mimg${m&&m[1]?' cv':''}">${i.b?`<span class="mtag">${i.b}</span>`:''}${m?`<img src="img/${m[0]}" alt="${i.n}" loading="lazy" decoding="async">`:`<span class="emo">${EMO[i.k]||'🍔'}</span>`}</div>`};
 const fmt=n=>'$'+n.toLocaleString('es-AR');
 $('#mnav').innerHTML=CATS.map(c=>`<button data-t="${c.id}">${c.ic}<span>${c.t}</span></button>`).join('');
 $('#mlist').innerHTML=CATS.map(c=>`<div class="mblock" id="${c.id}"><h3>${c.ic}${c.t}</h3><p class="mdesc">${c.d}</p><div class="mgrid">${ITEMS.filter(i=>i.c===c.id).map(i=>`<div class="mcard">${pic(i)}<div class="mbody"><h4>${i.n}</h4><p>${i.d}</p><div class="mfoot"><span class="pr">${fmt(i.p)}${i.e?'*':''}</span><button class="add" data-k="${i.k}" aria-label="Sumar ${i.n}">+ Sumar</button></div></div></div>`).join('')}</div></div>`).join('');
-$$('#mnav button').forEach(b=>b.addEventListener('click',()=>lenis.scrollTo('#'+b.dataset.t,{offset:-170,duration:1.2})));
+$$('#mnav button').forEach(b=>b.addEventListener('click',()=>lenis.scrollTo('#'+b.dataset.t,{offset:MOB()?-(34+$('#mnav').offsetHeight+12):-170,duration:1})));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)add(b.dataset.k)});
 
 /* ===== carrito ===== */
@@ -909,10 +921,10 @@ F('bbtn').addEventListener('click',openChat);
 F('bbub').addEventListener('click',e=>{if(e.target.classList.contains('bx')){e.stopPropagation();hideBubble()}else openChat()});
 $('#chat .cx').addEventListener('click',closeChat);
 let greeted=false;
-function openChat(){hideBubble();if(F('panel').classList.contains('open'))toggle(false);F('chat').classList.add('open');document.body.classList.add('chat-open');
+function openChat(){hideBubble();if(F('panel').classList.contains('open'))toggle(false);F('chat').classList.add('open');document.body.classList.add('chat-open');if(MOB())lenis.stop();
   if(!greeted){greeted=true;R.hola()}else talk(2);
   if(matchMedia('(pointer:fine)').matches)setTimeout(()=>F('cin').focus(),350)}
-function closeChat(){F('chat').classList.remove('open');document.body.classList.remove('chat-open')}
+function closeChat(){const was=F('chat').classList.contains('open');F('chat').classList.remove('open');document.body.classList.remove('chat-open');if(was&&!F('panel').classList.contains('open'))lenis.start()}
 const cm=F('cmsgs');
 const scrollC=()=>cm.scrollTo({top:cm.scrollHeight,behavior:'smooth'});
 function say(html,acts,quick){
