@@ -10,6 +10,11 @@
 <title>LaBurguesería Café | Hamburguesas en Río Gallegos</title>
 <meta name="description" content="Hamburguesas y mucho más. Av. Kirchner 1167, Río Gallegos. Abierto de 09:00 a 00:00.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="image" href="img/logo.webp">
+<link rel="preload" as="image" href="img/burger-hero.webp">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--red:#e4303b;--red-d:#b81f2a;--ink:#070709;--panel:#121215;--line:#2a2a30;--white:#fff;--mute:#b9b9c2}
@@ -32,11 +37,14 @@ button{font-family:inherit}
 /* ---------- cinta de estado ---------- */
 #status{position:fixed;top:0;left:0;right:0;height:34px;z-index:120;background:var(--red);color:#fff;overflow:hidden;display:flex;align-items:center;font-weight:700;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;white-space:nowrap}
 #status.closed{background:#2a2a30}
-#status .trk{display:inline-flex;will-change:transform}
+#status .trk{display:inline-flex;will-change:transform;animation:strk 60s linear infinite}
+@keyframes strk{to{transform:translate3d(-50%,0,0)}}
 #status .trk span{padding:0 28px;display:inline-flex;align-items:center;gap:10px}
-#status .dot{width:9px;height:9px;border-radius:50%;background:#7dff9a;box-shadow:0 0 0 0 rgba(125,255,154,.8);animation:ping 1.6s infinite}
+#status .dot{position:relative;width:9px;height:9px;border-radius:50%;background:#7dff9a}
+#status .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(125,255,154,.8);animation:ping 1.6s infinite}
+#status.closed .dot::after{display:none}
 #status.closed .dot{background:#ff6b6b;animation:none}
-@keyframes ping{70%{box-shadow:0 0 0 10px rgba(125,255,154,0)}100%{box-shadow:0 0 0 0 rgba(125,255,154,0)}}
+@keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(3.2);opacity:0}}
 /* ---------- loader ---------- */
 #loader{position:fixed;inset:0;background:var(--ink);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
 #lgo{width:min(560px,74vw);height:auto;filter:drop-shadow(0 10px 30px rgba(228,48,59,.35))}
@@ -188,7 +196,7 @@ nav{display:flex;gap:10px;align-items:center}
 .igbtn{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:9px 16px 9px 10px;border-radius:30px;background:linear-gradient(45deg,#f9a825,#e1306c 45%,#833ab4);color:#fff;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 8px 22px rgba(225,48,108,.35);transition:transform .2s}
 .igbtn:hover{transform:translateY(-2px)}
 .igbtn svg{width:22px;height:22px}
-.rev-head .stat{display:flex;flex-direction:column;align-items:flex-start}
+.rev-head .stat{display:flex;flex-direction:column;align-items:center;text-align:center}
 .cards{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .rcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;will-change:transform}
 .rcard:nth-child(2n){background:var(--red);border-color:var(--red)}
@@ -247,8 +255,8 @@ footer img{height:34px;display:block;margin:0 auto 14px}
 #fab #cnt{background:#fff;color:var(--red);min-width:24px;height:24px;border-radius:12px;display:grid;place-items:center;font-size:13px;padding:0 6px}
 #fab #ftot{display:none;font-family:'Anton';font-size:18px;letter-spacing:.5px;font-weight:400;padding-left:10px;border-left:1px solid rgba(255,255,255,.45)}
 #fab.has #ftot{display:block}
-#fab.has::after{content:"";position:absolute;inset:0;border-radius:inherit;animation:fabp 2.2s infinite;pointer-events:none}
-@keyframes fabp{0%{box-shadow:0 0 0 0 rgba(228,48,59,.6)}70%,100%{box-shadow:0 0 0 16px rgba(228,48,59,0)}}
+#fab{position:fixed}#fab.has::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid rgba(228,48,59,.7);animation:fabp 2.2s infinite;pointer-events:none}
+@keyframes fabp{0%{transform:scale(1);opacity:1}70%,100%{transform:scale(1.18,1.45);opacity:0}}
 #scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:149;opacity:0;pointer-events:none;transition:opacity .35s}
 #scrim.on{opacity:1;pointer-events:auto}
 #panel{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:#0e0e11;color:#fff;z-index:150;border-left:3px solid var(--red);transform:translateX(105%);transition:transform .45s cubic-bezier(.7,0,.2,1);display:flex;flex-direction:column}
@@ -409,6 +417,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   .mcard .add{width:100%;padding:11px 8px}
   .mtag{font-size:9px;padding:4px 8px;top:8px;left:8px}
 }
+.paused,.paused *,.paused *::before,.paused *::after{animation-play-state:paused!important}
 </style>
 </head>
 <body>
@@ -622,7 +631,7 @@ gsap.registerPlugin(ScrollTrigger);
   const item=`<span><i class="dot"></i>${t}</span><span>Av. Kirchner 1167 · Río Gallegos</span><span>Zona Kids</span><span>Pedí por WhatsApp o Uber Eats</span>`;
   $('#status').classList.toggle('closed',!open);
   $('#strk').innerHTML=item.repeat(6);
-  gsap.to('#strk',{xPercent:-50,duration:60,ease:'none',repeat:-1});
+
 })();
 
 /* ===== cinta corrida de marca ===== */
@@ -815,6 +824,9 @@ $('#mlist').innerHTML=CATS.map(c=>`<div class="mblock" id="${c.id}"><h3>${c.ic}$
 $$('#mnav button').forEach(b=>b.addEventListener('click',()=>lenis.scrollTo('#'+b.dataset.t,{offset:MOB()?-(34+$('#mnav').offsetHeight+12):-170,duration:1})));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)add(b.dataset.k)});
 
+/* ===== pausa animaciones infinitas fuera de pantalla ===== */
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('paused',!e.isIntersecting)),{rootMargin:'100px'});
+  ['.hero','.band','.kids','#loader'].forEach(q=>{const el=document.querySelector(q);if(el)io.observe(el)})}
 /* ===== carrito ===== */
 let cart={},modo='envio',pago='';
 const F=id=>document.getElementById(id);
