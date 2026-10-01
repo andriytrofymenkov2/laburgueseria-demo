@@ -373,7 +373,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   .hero{height:100svh;min-height:600px;--lw:84vw}
   .hlogo-wrap{top:calc(120px + 10svh)}
   .hero .heroburger{width:min(94vw,44svh);top:calc(120px + 10svh + var(--lh) + 10svh)}
-  .s1{top:calc(120px + 10svh + var(--lh) + 12svh)}.s2{top:calc(120px + 10svh + var(--lh) + 33svh)}
+  .s1{top:calc(120px + 10svh + var(--lh) + 12svh)}.s2{top:calc(120px + 10svh + var(--lh) + 3svh);right:4vw}
   .slide{padding:15vh 6vw 7vh;gap:10px}
   .explode .burger{--W:min(40vw,30vh)}
   .lbl{font-size:9px;padding:4px 7px;white-space:normal;line-height:1.2;max-width:calc(50vw - var(--hw) - 22px);text-align:center}
@@ -679,9 +679,11 @@ function initScroll(){
   ScrollTrigger.config({ignoreMobileResize:true});
   // celular: mismo recorrido hacia la derecha, pero liviano (solo se mueve la pista)
   gsap.matchMedia().add('(max-width:700px)',()=>{
-    gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=260%',pin:true,anticipatePin:1,scrub:.6,invalidateOnRefresh:true,
+    ScrollTrigger.normalizeScroll(true);   // el scroll táctil se procesa junto con la animación: sin saltos en la parte fija
+    gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=260%',pin:true,anticipatePin:1,scrub:.4,invalidateOnRefresh:true,
       onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}})
       .to(track,{xPercent:-75,ease:'none',force3D:true},0);
+    return()=>ScrollTrigger.normalizeScroll(false);
   });
   gsap.matchMedia().add('(min-width:701px)',()=>{
   const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
