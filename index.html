@@ -557,7 +557,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   <div class="ways">
     <div class="way red"><span class="num">01</span><h3>Por WhatsApp</h3><p>Armá tu pedido en la carta y mandalo listo al local. Sin comisiones.</p><div class="phone"><div class="ph-h"><i>🍔</i>LaBurguesería</div><div class="bub">Hola! Quiero hacer un pedido:<br>• 2x La Criolla<br>• 1x Papas corrugadas<br><b>Total: $29.500</b></div><div class="bub in">¡Listo! Ya lo estamos preparando 🍔</div></div><a class="pill wht" href="#menu" data-go>Armar pedido</a></div>
     <div class="way"><span class="num">02</span><h3>Uber Eats</h3><p>Encontrá a LaBurgue en Uber Eats y pedí desde la app, donde estés.</p><img loading="lazy" decoding="async" class="bag" src="img/u-bag.jpg" alt=""><a class="pill alt" href="https://www.instagram.com/laburgueseriargl/" target="_blank" rel="noopener">Ver en Instagram</a></div>
-    <div class="way"><span class="num">03</span><h3>En el local</h3><p>Av. Kirchner 1167, Río Gallegos. Con Zona Kids para toda la familia.</p><img loading="lazy" decoding="async" class="bag" src="img/local.jpg" alt=""><a class="pill" href="https://www.google.com/maps/search/?api=1&query=Av.+Kirchner+1167+R%C3%ADo+Gallegos" target="_blank" rel="noopener">Cómo llegar</a></div>
+    <div class="way"><span class="num">03</span><h3>En el local</h3><p>Av. Kirchner 1167, Río Gallegos. Con Zona Kids para toda la familia.</p><img loading="lazy" decoding="async" class="bag" src="img/local.jpg" alt=""><a class="pill" href="https://www.google.com/maps/place/La+Burgueseria/@-51.6196574,-69.2186899,17z/data=!4m6!3m5!1s0xbdb6f90075da0753:0x882c7f802e96f0c4!8m2!3d-51.6196574!4d-69.2186899" target="_blank" rel="noopener">Cómo llegar</a></div>
   </div>
   <div class="info-grid">
     <div class="hours">
@@ -565,7 +565,7 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
       <ul><li>Lunes a domingo<b>09:00 – 00:00</b></li><li>Zona Kids<b>Todos los días</b></li><li>Delivery<b>Uber Eats / WhatsApp</b></li></ul>
       <p class="addr">📍 Av. Kirchner 1167<br>Río Gallegos, Santa Cruz<br>Instagram: <b>@laburgueseriargl</b></p>
     </div>
-    <div class="mapbox"><iframe title="Mapa de LaBurguesería" loading="lazy" src="https://www.google.com/maps?q=Av.+Kirchner+1167,+R%C3%ADo+Gallegos&output=embed"></iframe></div>
+    <div class="mapbox"><iframe title="Mapa de LaBurguesería" loading="lazy" src="https://maps.google.com/maps?q=-51.6196574,-69.2186899&z=17&output=embed"></iframe></div>
   </div>
 </section>
 
@@ -968,7 +968,7 @@ const R={
   p1:()=>say('Para vos solo: <b>La Criolla</b> si venís con hambre, o la promo <b>Chesse Burger + papas</b>. Sumalas y después completás la dirección en el pedido.',addBtn('criolla')+addBtn('chesse'),['verpedido','reco']),
   p2:()=>say('Para dos, el <b>Combo Pollo</b> es ideal: 2 hamburguesas de pollo crispy + gaseosa, a $21.000. ¿Le sumamos papas?',addBtn('pollo')+addBtn('papasc'),['verpedido','p4']),
   p4:()=>say('Para la familia está el <b>Combo Familiar</b>: 2 hamburguesas, 1 kids, nuggets, 4 gaseosas y papas para compartir, a $39.900 👨‍👩‍👧‍👦',addBtn('familiar')+addBtn('kidsc'),['verpedido','kids']),
-  info:()=>say(`${openNow()?'🟢 <b>Estamos abiertos</b> ahora.':'🔴 Ahora estamos cerrados, <b>abrimos a las 09:00</b>.'}<br>Atendemos todos los días de <b>09:00 a 00:00</b> en <b>Av. Kirchner 1167</b>, Río Gallegos. También nos encontrás en Uber Eats.`,'<a href="https://www.google.com/maps/search/?api=1&query=Av.+Kirchner+1167+R%C3%ADo+Gallegos" target="_blank" rel="noopener">📍 Cómo llegar</a>',['pedido','kids']),
+  info:()=>say(`${openNow()?'🟢 <b>Estamos abiertos</b> ahora.':'🔴 Ahora estamos cerrados, <b>abrimos a las 09:00</b>.'}<br>Atendemos todos los días de <b>09:00 a 00:00</b> en <b>Av. Kirchner 1167</b>, Río Gallegos. También nos encontrás en Uber Eats.`,'<a href="https://www.google.com/maps/place/La+Burgueseria/@-51.6196574,-69.2186899,17z/data=!4m6!3m5!1s0xbdb6f90075da0753:0x882c7f802e96f0c4!8m2!3d-51.6196574!4d-69.2186899" target="_blank" rel="noopener">📍 Cómo llegar</a>',['pedido','kids']),
   kids:()=>say('Tenemos <b>Zona Kids</b> 🧸 para que los chicos jueguen mientras ustedes comen tranquilos. Y el <b>Combo Kids</b> trae mini burger, papas y bebida.',addBtn('kidsc'),['pedido','info']),
   verpedido:()=>toggle(true),
   nose:()=>say('Mmm, eso todavía no lo sé 😅 Pero te puedo ayudar con esto:',null,['reco','promo','pedido','info'])
