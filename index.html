@@ -368,11 +368,8 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
 @media(max-width:560px){.cards{grid-template-columns:1fr}}
 @media(max-width:700px){
   .hf1{right:-3%;top:4%;width:20%}.hf2{right:-2%;bottom:4%;width:20%}.hf3{left:-2%;bottom:4%;width:20%}
-  .stars{height:auto;overflow:visible}
-  .stars-top{position:relative;top:auto;left:auto;right:auto;padding:12vh 6vw 0}
-  .track{flex-direction:column;width:100%;height:auto;transform:none!important}
-  .slide{width:100%;height:auto;min-height:0;padding:6vh 6vw 8vh;grid-template-columns:1fr;gap:18px}
-  .stars-bar{display:none}
+  .track{will-change:transform;backface-visibility:hidden}
+  .slide{padding:15vh 6vw 7vh;gap:10px}
   .explode .burger{--W:min(40vw,30vh)}
   .lbl{font-size:9px;padding:4px 7px;white-space:normal;line-height:1.2;max-width:calc(50vw - var(--hw) - 22px);text-align:center}
   .hb-badge{left:-2%;width:19%}
@@ -674,6 +671,13 @@ function initScroll(){
 
   /* estrellas: recorrido horizontal fijo */
   const track=$('#track'),n=4;
+  ScrollTrigger.config({ignoreMobileResize:true});
+  // celular: mismo recorrido hacia la derecha, pero liviano (solo se mueve la pista)
+  gsap.matchMedia().add('(max-width:700px)',()=>{
+    gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=260%',pin:true,anticipatePin:1,scrub:.6,invalidateOnRefresh:true,
+      onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}})
+      .to(track,{xPercent:-75,ease:'none',force3D:true},0);
+  });
   gsap.matchMedia().add('(min-width:701px)',()=>{
   const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
     onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}});
