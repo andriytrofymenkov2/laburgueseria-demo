@@ -366,6 +366,26 @@ body.chat-open #burgui,body.cart-open #burgui{opacity:0!important;pointer-events
   .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 }
 @media(max-width:560px){.cards{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .hf1{right:-3%;top:4%;width:20%}.hf2{right:-2%;bottom:4%;width:20%}.hf3{left:-2%;bottom:4%;width:20%}
+  .stars{height:auto;overflow:visible}
+  .stars-top{position:relative;top:auto;left:auto;right:auto;padding:12vh 6vw 0}
+  .track{flex-direction:column;width:100%;height:auto;transform:none!important}
+  .slide{width:100%;height:auto;min-height:0;padding:6vh 6vw 8vh;grid-template-columns:1fr;gap:18px}
+  .stars-bar{display:none}
+  .explode .burger{--W:min(40vw,30vh)}
+  .lbl{font-size:9px;padding:4px 7px;white-space:normal;line-height:1.2;max-width:calc(50vw - var(--hw) - 22px);text-align:center}
+  .hb-badge{left:-2%;width:19%}
+  .kfl.a{left:-2%}.kfl.b{right:-2%}
+  .lbl.r{left:calc(50% + var(--hw) + 12px)}.lbl.l{right:calc(50% + var(--hw) + 12px)}
+  .lbl::before{width:10px}
+  .mbody{padding:12px 12px 14px;gap:6px}
+  .mbody h4{font-size:18px}.mbody p{font-size:12px}
+  .mfoot{flex-direction:column;align-items:stretch;gap:8px}
+  .mfoot .pr{align-self:flex-start;font-size:20px}
+  .mcard .add{width:100%;padding:11px 8px}
+  .mtag{font-size:9px;padding:4px 8px;top:8px;left:8px}
+}
 </style>
 </head>
 <body>
@@ -654,6 +674,7 @@ function initScroll(){
 
   /* estrellas: recorrido horizontal fijo */
   const track=$('#track'),n=4;
+  gsap.matchMedia().add('(min-width:701px)',()=>{
   const st=gsap.timeline({scrollTrigger:{trigger:'#stars',start:'top top',end:'+=320%',pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true,
     onUpdate:s=>{$('#sprog').style.width=(s.progress*100)+'%'}}});
   st.to(track,{xPercent:-75,ease:'none'},0)
@@ -661,6 +682,7 @@ function initScroll(){
     .to('.pic:not(.two) img',{rotate:(i)=>i%2?-4:4,scale:1.06,ease:'none'},0)
     .fromTo('.pic.two .b1',{rotation:-8,y:16},{rotation:-3,y:-16,ease:'none'},0)
     .fromTo('.pic.two .b2',{rotation:7,y:-12},{rotation:10,y:18,ease:'none'},0);
+  });
 
   /* anatomía: la burger se desarma capa por capa */
   gsap.set('#xburger',{xPercent:-50,yPercent:-50});
